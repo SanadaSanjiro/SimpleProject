@@ -1,12 +1,12 @@
 package com.digdes.simple;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "public.simple")
+@Table(name = "simple")
 public class SimpleModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "id")
     Long id;
     @Column(name = "name")
@@ -29,5 +29,10 @@ public class SimpleModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return ("{"+ id +"; " + name + "}");
     }
 }
