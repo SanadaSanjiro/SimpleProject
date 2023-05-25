@@ -1,4 +1,4 @@
-package com.digdes.simple;
+package com.digdes.simple.model;
 
 import jakarta.persistence.*;
 
