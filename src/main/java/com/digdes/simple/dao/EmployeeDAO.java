@@ -15,9 +15,7 @@ public class EmployeeDAO {
 
     public EmployeeModel getById(Long id) {
         try {
-            EmployeeModel em = new EmployeeModel();
-            em=employeeRepository.findById(id).get();
-            return em;
+            return employeeRepository.findById(id).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,8 +24,7 @@ public class EmployeeDAO {
 
     public EmployeeModel create(EmployeeModel employeeModel) {
         try {
-            employeeModel.setId(employeeRepository.save(employeeModel).getId());
-            return employeeModel;
+            return employeeRepository.save(employeeModel);
         } catch (Exception e) {
             e.printStackTrace();
         }
