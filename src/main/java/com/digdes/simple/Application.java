@@ -1,6 +1,7 @@
 package com.digdes.simple;
 
 import com.digdes.simple.dao.*;
+import com.digdes.simple.dto.EmployeeDTO;
 import com.digdes.simple.model.EmployeeModel;
 import com.digdes.simple.model.EmployeeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,45 @@ public class Application implements CommandLineRunner {
         System.out.println(employeeDAO.deleteById(em.getId()));
         System.out.println("Получаем список всех сотрудников");
         System.out.println(employeeDAO.getAll());
+        System.out.println("Применяем фильтр");
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(1l);
+        System.out.println("id = 1");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setFirstname("Иван");
+        System.out.println("firstname = Иван");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setLastname("Петров");
+        System.out.println("lastname = Петров");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setSurname("Иванович");
+        System.out.println("surname = Иванович");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setPosition("разработчик");
+        System.out.println("position = разработчик");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setAccount("ivanov");
+        System.out.println("account = ivanov");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setEmail("petrovich@digdes.com");
+        System.out.println("email = petrovich@digdes.com");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setStatus(EmployeeStatus.ACTIVE.name());
+        System.out.println("статус = ACTIVE");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+        employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(10000L);
+        System.out.println("несуществующий id");
+        System.out.println(employeeDAO.getFiltered(employeeDTO));
+
+
         /**
         simpleRepository.findAll().forEach(System.out::println);
         employeeRepository.findAll().forEach(System.out::println);

@@ -6,9 +6,9 @@ import lombok.Data;
 public class EmployeeDTO {
     Long id;
     String uid;
-    String firstName;
-    String lastName;
-    String surName;
+    String firstname;
+    String lastname;
+    String surname;
     String position;
     String account;
     String email;

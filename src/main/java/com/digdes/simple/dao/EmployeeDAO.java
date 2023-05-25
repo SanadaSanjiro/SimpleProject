@@ -65,6 +65,11 @@ public class EmployeeDAO {
     }
 
     public List<EmployeeModel> getFiltered(EmployeeDTO dto) {
+        try {
+            return employeeRepository.findAll(EmloyeeSpecification.getFilteres(dto));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
      return null;
     }
 }
