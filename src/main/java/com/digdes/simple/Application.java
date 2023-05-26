@@ -2,8 +2,8 @@ package com.digdes.simple;
 
 import com.digdes.simple.dao.*;
 import com.digdes.simple.dto.EmployeeDTO;
+import com.digdes.simple.mapping.EmployeeMapper;
 import com.digdes.simple.model.EmployeeModel;
-import com.digdes.simple.model.EmployeeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +23,23 @@ public class Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        /**
+        EmployeeDTO dto = new EmployeeDTO();
+        dto.setId(100L);
+        dto.setUid("UID100L");
+        dto.setFirstname("Василий");
+        dto.setLastname("Пупкин");
+        dto.setSurname("Васильевич");
+        dto.setPosition("босс");
+        dto.setAccount("vasyanya");
+        dto.setEmail("vasya@mail.ru");
+        dto.setStatus("DELETED");
+        EmployeeModel model = EmployeeMapper.map(dto);
+        System.out.println(model);
+
+        dto = EmployeeMapper.map(model);
+        System.out.println(dto);
+
         System.out.println("Получаем сотрудника с id=1");
         System.out.println(employeeDAO.getById(1L));
         System.out.println("Получаем список всех сотрудников");

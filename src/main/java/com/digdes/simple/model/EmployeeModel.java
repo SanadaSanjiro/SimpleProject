@@ -33,6 +33,7 @@ public class EmployeeModel {
     public String toString() {
         return "\nEmployee{" +
                 "id=" + id +
+                ", uid='" + uid + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", surName='" + surName + '\'' +

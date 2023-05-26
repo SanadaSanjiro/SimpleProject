@@ -4,16 +4,14 @@ import com.digdes.simple.dto.EmployeeDTO;
 import com.digdes.simple.model.EmployeeModel;
 import com.digdes.simple.model.EmployeeStatus;
 import jakarta.persistence.criteria.Predicate;
-import liquibase.util.ObjectUtil;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class EmloyeeSpecification {
+public class EmployeeSpecification {
 
     public static Specification<EmployeeModel> getFilteres (EmployeeDTO employeeDTO) {
         return ((root, query, criteriaBuilder ) -> {

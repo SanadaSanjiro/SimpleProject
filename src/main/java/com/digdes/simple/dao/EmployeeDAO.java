@@ -63,7 +63,7 @@ public class EmployeeDAO {
 
     public List<EmployeeModel> getFiltered(EmployeeDTO dto) {
         try {
-            return employeeRepository.findAll(EmloyeeSpecification.getFilteres(dto));
+            return employeeRepository.findAll(EmployeeSpecification.getFilteres(dto));
         } catch (Exception e) {
             e.printStackTrace();
         }
