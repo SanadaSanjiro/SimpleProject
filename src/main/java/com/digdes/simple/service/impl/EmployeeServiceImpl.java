@@ -5,6 +5,7 @@ import com.digdes.simple.dto.EmployeeDTO;
 import com.digdes.simple.mapping.EmployeeMapper;
 import com.digdes.simple.model.EmployeeModel;
 import com.digdes.simple.service.EmployeeService;
+import com.digdes.simple.service.PassEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeDAO employeeDAO;
 
+    private final PassEncoder passEncoder;
+
     @Override
     public EmployeeDTO getById(Long id) {
         EmployeeModel model = employeeDAO.getById(id);
@@ -27,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO create(EmployeeDTO dto) {
+        dto.setPassword(passEncoder.encode(dto.getPassword()));
         EmployeeModel model = employeeDAO.create(EmployeeMapper.map(dto));
         return EmployeeMapper.map(model);
     }
@@ -48,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeDTO delete(Long id) {
-        EmployeeModel model = employeeDAO.getById(id);
+        EmployeeModel model = employeeDAO.deleteById(id);
         if (model==null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
         return EmployeeMapper.map(model);
     }

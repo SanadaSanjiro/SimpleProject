@@ -69,4 +69,13 @@ public class EmployeeDAO {
         }
      return null;
     }
+
+    public EmployeeModel getByAccount(String account) {
+        try {
+            return employeeRepository.getByAccount(account).get();
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return null;
+    }
 }

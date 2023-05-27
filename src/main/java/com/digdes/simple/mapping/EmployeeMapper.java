@@ -33,6 +33,9 @@ public class EmployeeMapper {
         if (!ObjectUtils.isEmpty(dto.getEmail())) {
             model.setEMail(dto.getEmail());
         }
+        if (!ObjectUtils.isEmpty(dto.getPassword())) {
+            model.setPassword(dto.getPassword());
+        }
         if (!ObjectUtils.isEmpty(dto.getStatus())) {
             switch (dto.getStatus()) {
                 case ("ACTIVE"):
@@ -71,6 +74,9 @@ public class EmployeeMapper {
         }
         if (!ObjectUtils.isEmpty(model.getEMail())) {
             dto.setEmail(model.getEMail());
+        }
+        if (!ObjectUtils.isEmpty(model.getPassword())) {
+            dto.setPassword(model.getPassword());
         }
         if (!ObjectUtils.isEmpty(model.getStatus())) {
             switch (model.getStatus().name()) {
