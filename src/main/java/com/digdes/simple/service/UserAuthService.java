@@ -1,7 +1,6 @@
 package com.digdes.simple.service;
 
 import com.digdes.simple.dao.EmployeeDAO;
-import com.digdes.simple.dto.EmployeeDTO;
 import com.digdes.simple.model.EmployeeModel;
 import com.digdes.simple.model.EmployeeStatus;
 import jakarta.annotation.PostConstruct;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

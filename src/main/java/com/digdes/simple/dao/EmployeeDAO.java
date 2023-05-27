@@ -1,6 +1,7 @@
 package com.digdes.simple.dao;
 
-import com.digdes.simple.dto.EmployeeDTO;
+import com.digdes.simple.dto.employee.EmployeeDTO;
+import com.digdes.simple.dto.employee.EmployeeSrchDTO;
 import com.digdes.simple.model.EmployeeModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,7 +62,7 @@ public class EmployeeDAO {
         return null;
     }
 
-    public List<EmployeeModel> getFiltered(EmployeeDTO dto) {
+    public List<EmployeeModel> getFiltered(EmployeeSrchDTO dto) {
         try {
             return employeeRepository.findAll(EmployeeSpecification.getFilteres(dto));
         } catch (Exception e) {

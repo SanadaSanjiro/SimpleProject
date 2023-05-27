@@ -1,9 +1,11 @@
-package com.digdes.simple.mapping;
+package com.digdes.simple.mapping.employee;
 
-import com.digdes.simple.dto.EmployeeDTO;
+import com.digdes.simple.dto.employee.EmployeeDTO;
 import com.digdes.simple.model.EmployeeModel;
 import com.digdes.simple.model.EmployeeStatus;
 import org.springframework.util.ObjectUtils;
+
+// Образцовое преобразование модели в DTO и обратно с полным набором полей.
 
 public class EmployeeMapper {
 

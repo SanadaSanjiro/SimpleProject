@@ -1,12 +1,5 @@
 package com.digdes.simple;
 
-import com.digdes.simple.dao.*;
-import com.digdes.simple.dto.EmployeeDTO;
-import com.digdes.simple.mapping.EmployeeMapper;
-import com.digdes.simple.model.EmployeeModel;
-import com.digdes.simple.service.impl.EmployeeServiceImpl;
-import com.digdes.simple.web.EmployeeController;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

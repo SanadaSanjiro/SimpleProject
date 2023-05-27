@@ -1,21 +1,21 @@
 package com.digdes.simple.service;
 
-import com.digdes.simple.dto.EmployeeDTO;
+import com.digdes.simple.dto.employee.*;
 
 import java.util.List;
 
 public interface EmployeeService {
 
-    EmployeeDTO getById(Long id);
+    EmployeeViewDTO getById(Long id);
 
-    EmployeeDTO create(EmployeeDTO dto);
+    EmployeeViewDTO create(EmployeeCrtDTO dto);
 
-    EmployeeDTO update(EmployeeDTO dto);
+    EmployeeViewDTO update(EmployeeUpdDTO dto);
 
-    List<EmployeeDTO> getAll();
+    List<EmployeeViewDTO> getAll();
 
-    EmployeeDTO delete(Long id);
+    EmployeeViewDTO delete(Long id);
 
-    List<EmployeeDTO> getFiltered(EmployeeDTO dto);
+    List<EmployeeViewDTO> getFiltered(EmployeeSrchDTO dto);
 
 }
