@@ -4,13 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 //Класс Сотрудник
 
 @Getter
 @Setter
 @Entity
 @Table(name="employees")
-public class EmployeeModel {
+public class EmployeeModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
