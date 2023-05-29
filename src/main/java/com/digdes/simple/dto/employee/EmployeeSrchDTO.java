@@ -1,5 +1,6 @@
 package com.digdes.simple.dto.employee;
 
+import com.digdes.simple.model.employee.EmployeeStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -17,4 +18,6 @@ public class EmployeeSrchDTO {
     String account;
     @Schema (description = "e-mail")
     String email;
+    @Schema (description = "Статус. Поиск производится только по сотрудникам в статусе Активный")
+    final String status = EmployeeStatus.ACTIVE.toString();
 }

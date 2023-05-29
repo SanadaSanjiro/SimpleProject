@@ -12,6 +12,7 @@ import com.digdes.simple.service.PassEncoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -36,7 +37,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeViewDTO create(EmployeeCrtDTO dto) {
         EmployeeModel model = EmployeeCrtMapper.map(dto);
-        model.setPassword(passEncoder.encode(model.getPassword())); // шифрует пароль для сохранения в БД
+        if(!ObjectUtils.isEmpty(model.getPassword())) {
+            model.setPassword(passEncoder.encode(model.getPassword())); // шифрует пароль для сохранения в БД
+        }
         model.setStatus(EmployeeStatus.ACTIVE); // устанавливает статус сотрудника в АКТИВНЫЙ
         model = employeeDAO.create(model);
         return EmployeeViewMapper.map(model);
@@ -45,9 +48,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeViewDTO update(EmployeeUpdDTO dto) {
         EmployeeModel model = EmployeeUpdMapper.map(dto);
-        model.setStatus(EmployeeStatus.ACTIVE);
         Long id = model.getId();
-        model.setPassword(employeeDAO.getById(id).getPassword());
+        if (employeeDAO.getById(id).getStatus().equals(EmployeeStatus.DELETED)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        model.setStatus(EmployeeStatus.ACTIVE);
+        if(!ObjectUtils.isEmpty(model.getPassword())) {
+            model.setPassword(employeeDAO.getById(id).getPassword());
+        }
         model = employeeDAO.update(model);
         return EmployeeViewMapper.map(model);
     }
@@ -63,9 +71,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeViewDTO delete(Long id) {
-        EmployeeModel model = employeeDAO.deleteById(id);
+        EmployeeModel model = employeeDAO.getById(id);
         if (model==null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
-        return EmployeeViewMapper.map(model);
+        model.setStatus(EmployeeStatus.DELETED);
+        return EmployeeViewMapper.map(employeeDAO.update(model));
     }
 
     @Override

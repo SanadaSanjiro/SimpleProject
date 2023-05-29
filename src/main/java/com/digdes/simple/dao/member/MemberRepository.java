@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberModel, MembersKey> {
-    Optional<List<MemberModel>> getAllByPrjcode(String prjcode);
+    Optional<List<MemberModel>> getAllById(MembersKey key);
 }

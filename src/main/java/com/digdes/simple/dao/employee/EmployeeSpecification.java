@@ -2,6 +2,7 @@ package com.digdes.simple.dao.employee;
 
 import com.digdes.simple.dto.employee.EmployeeSrchDTO;
 import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeStatus;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
@@ -18,7 +19,7 @@ public class EmployeeSpecification {
             if(!ObjectUtils.isEmpty(employeeDTO.getUid()))
                 predicates.add(criteriaBuilder.equal(root.get("uid"), employeeDTO.getUid()));
             if(!ObjectUtils.isEmpty(employeeDTO.getFirstname()))
-                predicates.add(criteriaBuilder.equal(root.get("firstName"), employeeDTO.getFirstname()));
+                predicates.add(criteriaBuilder.like(root.get("firstName"), "%"+employeeDTO.getFirstname()+"%"));
             if(!ObjectUtils.isEmpty(employeeDTO.getLastname()))
                 predicates.add(criteriaBuilder.equal(root.get("lastName"), employeeDTO.getLastname()));
             if(!ObjectUtils.isEmpty(employeeDTO.getSurname()))
@@ -27,7 +28,8 @@ public class EmployeeSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("account"), employeeDTO.getAccount()));
             if(!ObjectUtils.isEmpty(employeeDTO.getEmail()))
                 predicates.add(criteriaBuilder.equal(root.get("eMail"), employeeDTO.getEmail()));
-             if (CollectionUtils.isEmpty(predicates))
+            predicates.add(criteriaBuilder.equal(root.get("status"), EmployeeStatus.ACTIVE));
+            if (CollectionUtils.isEmpty(predicates))
                 return query.where().getRestriction();
             else
                 return query.where(criteriaBuilder.and(predicates.toArray(Predicate[]::new))).getRestriction();
