@@ -1,8 +1,8 @@
 package com.digdes.simple.service;
 
-import com.digdes.simple.dao.EmployeeDAO;
-import com.digdes.simple.model.EmployeeModel;
-import com.digdes.simple.model.EmployeeStatus;
+import com.digdes.simple.dao.employee.EmployeeDAO;
+import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeStatus;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,9 +1,7 @@
-package com.digdes.simple.dao;
+package com.digdes.simple.dao.employee;
 
-import com.digdes.simple.dto.employee.EmployeeDTO;
 import com.digdes.simple.dto.employee.EmployeeSrchDTO;
-import com.digdes.simple.model.EmployeeModel;
-import com.digdes.simple.model.EmployeeStatus;
+import com.digdes.simple.model.employee.EmployeeModel;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;

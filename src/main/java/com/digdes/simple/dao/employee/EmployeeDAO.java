@@ -1,14 +1,15 @@
-package com.digdes.simple.dao;
+package com.digdes.simple.dao.employee;
 
-import com.digdes.simple.dto.employee.EmployeeDTO;
 import com.digdes.simple.dto.employee.EmployeeSrchDTO;
-import com.digdes.simple.model.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeModel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class EmployeeDAO {
 
     @Autowired
@@ -34,8 +35,7 @@ public class EmployeeDAO {
 
     public EmployeeModel update(EmployeeModel employeeModel) {
         try {
-            employeeRepository.save(employeeModel);
-            return employeeModel;
+            return employeeRepository.save(employeeModel);
         } catch (Exception e) {
             e.printStackTrace();
         }

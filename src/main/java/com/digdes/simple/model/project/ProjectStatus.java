@@ -1,4 +1,4 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.project;
 
 // Допустимые статусы проекта
 public enum ProjectStatus {

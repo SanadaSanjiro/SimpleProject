@@ -1,5 +1,7 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.member;
 
+import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.project.ProjectModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +11,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
+@Table(name="members")
 public class MemberModel implements Serializable {
     @EmbeddedId
     private MembersKey id;

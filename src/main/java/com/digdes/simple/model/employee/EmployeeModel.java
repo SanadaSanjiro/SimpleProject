@@ -1,4 +1,4 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.employee;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.task;
 
 //Допустимые статусы задач
 public enum TaskStatus {

@@ -1,12 +1,12 @@
 package com.digdes.simple.service.impl;
 
-import com.digdes.simple.dao.EmployeeDAO;
+import com.digdes.simple.dao.employee.EmployeeDAO;
 import com.digdes.simple.dto.employee.*;
 import com.digdes.simple.mapping.employee.EmployeeCrtMapper;
 import com.digdes.simple.mapping.employee.EmployeeUpdMapper;
 import com.digdes.simple.mapping.employee.EmployeeViewMapper;
-import com.digdes.simple.model.EmployeeModel;
-import com.digdes.simple.model.EmployeeStatus;
+import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.service.EmployeeService;
 import com.digdes.simple.service.PassEncoder;
 import lombok.RequiredArgsConstructor;

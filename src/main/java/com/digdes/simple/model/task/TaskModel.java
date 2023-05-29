@@ -1,5 +1,6 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.task;
 
+import com.digdes.simple.model.employee.EmployeeModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(name="tasks")
 public class TaskModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

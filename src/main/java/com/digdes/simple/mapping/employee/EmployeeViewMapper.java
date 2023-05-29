@@ -1,8 +1,7 @@
 package com.digdes.simple.mapping.employee;
 
-import com.digdes.simple.dto.employee.EmployeeDTO;
 import com.digdes.simple.dto.employee.EmployeeViewDTO;
-import com.digdes.simple.model.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeModel;
 import org.springframework.util.ObjectUtils;
 
 //Класс для преобразования модели в ДТО для возврата в качестве результатов запроса

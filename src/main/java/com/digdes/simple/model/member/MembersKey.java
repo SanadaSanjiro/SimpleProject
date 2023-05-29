@@ -1,4 +1,4 @@
-package com.digdes.simple.model;
+package com.digdes.simple.model.member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
