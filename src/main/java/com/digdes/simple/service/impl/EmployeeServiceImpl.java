@@ -10,6 +10,7 @@ import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.service.EmployeeService;
 import com.digdes.simple.service.PassEncoder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -21,14 +22,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
+    @Autowired
     private final EmployeeDAO employeeDAO;
 
+    @Autowired
     private final PassEncoder passEncoder;
 
 
 
     @Override
     public EmployeeViewDTO getById(Long id) {
+        if (id==null) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         EmployeeModel model = employeeDAO.getById(id);
         if (model==null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
         return EmployeeViewMapper.map(model);
@@ -36,6 +40,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeViewDTO create(EmployeeCrtDTO dto) {
+        // Проверяем, что DTO не пустое, и содержит обязательные поля Имя и Фамилия
+        if (dto == null || dto.getFirstname() == null || dto.getLastname() ==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        // Проверяем уникальность учетной записи
+        if (dto.getAccount()!=null && !(employeeDAO.getByAccount(dto.getAccount())==null)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         EmployeeModel model = EmployeeCrtMapper.map(dto);
         if(!ObjectUtils.isEmpty(model.getPassword())) {
             model.setPassword(passEncoder.encode(model.getPassword())); // шифрует пароль для сохранения в БД
@@ -47,6 +60,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeViewDTO update(EmployeeUpdDTO dto) {
+        // Проверяем, что DTO не пустое, и содержит обязательные поля Имя и Фамилия
+        if (dto == null || dto.getFirstname() == null || dto.getLastname() ==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        // Проверяем уникальность учетной записи
+        if (dto.getAccount()!=null && !(employeeDAO.getByAccount(dto.getAccount())==null)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
         EmployeeModel model = EmployeeUpdMapper.map(dto);
         Long id = model.getId();
         if (employeeDAO.getById(id).getStatus().equals(EmployeeStatus.DELETED)) {
@@ -71,6 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeViewDTO delete(Long id) {
+        if (id==null) {throw new ResponseStatusException(HttpStatus.BAD_REQUEST);}
         EmployeeModel model = employeeDAO.getById(id);
         if (model==null) {throw new ResponseStatusException(HttpStatus.NOT_FOUND);}
         model.setStatus(EmployeeStatus.DELETED);
@@ -79,6 +103,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeViewDTO> getFiltered(EmployeeSrchDTO dto) {
+        if (dto == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         List<EmployeeViewDTO> dtos = employeeDAO.getFiltered(dto)
                 .stream()
                 .map(m-> EmployeeViewMapper.map(m))
