@@ -12,9 +12,6 @@ public class EmployeeViewMapper {
         if (!ObjectUtils.isEmpty(model.getId())) {
             dto.setId(model.getId());
         }
-        if (!ObjectUtils.isEmpty(model.getUid())) {
-            dto.setUid(model.getUid());
-        }
         if (!ObjectUtils.isEmpty(model.getFirstName())) {
             dto.setFirstname(model.getFirstName());
         }

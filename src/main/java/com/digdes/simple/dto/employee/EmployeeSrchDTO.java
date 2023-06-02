@@ -7,8 +7,6 @@ import lombok.Data;
 @Data
 @Schema (description = "Поиск сотрудников")
 public class EmployeeSrchDTO {
-    String uid;
-    @Schema(description = "Имя")
     String firstname;
     @Schema (description = "Фамилия")
     String lastname;

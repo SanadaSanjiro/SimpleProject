@@ -12,9 +12,6 @@ public class EmployeeUpdMapper {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             model.setId(dto.getId());
         }
-        if (!ObjectUtils.isEmpty(dto.getUid())) {
-            model.setUid(dto.getUid());
-        }
         if (!ObjectUtils.isEmpty(dto.getFirstname())) {
             model.setFirstName(dto.getFirstname());
         }

@@ -16,8 +16,6 @@ public class EmployeeSpecification {
     public static Specification<EmployeeModel> getFilteres (EmployeeSrchDTO employeeDTO) {
         return ((root, query, criteriaBuilder ) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if(!ObjectUtils.isEmpty(employeeDTO.getUid()))
-                predicates.add(criteriaBuilder.equal(root.get("uid"), employeeDTO.getUid()));
             if(!ObjectUtils.isEmpty(employeeDTO.getFirstname()))
                 predicates.add(criteriaBuilder.like(root.get("firstName"), "%"+employeeDTO.getFirstname()+"%"));
             if(!ObjectUtils.isEmpty(employeeDTO.getLastname()))

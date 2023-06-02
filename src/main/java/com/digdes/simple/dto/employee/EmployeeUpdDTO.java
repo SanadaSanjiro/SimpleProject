@@ -8,8 +8,6 @@ import lombok.Data;
 @Schema (description = "Редактируемый сотрудник")
 public class EmployeeUpdDTO {
     Long id;
-    String uid;
-    @Schema(description = "Имя")
     String firstname;
     @Schema (description = "Фамилия")
     String lastname;

@@ -1,6 +1,7 @@
 package com.digdes.simple.model.employee;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,8 @@ public class EmployeeModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String uid;
     @Column(name="firstname")
     private String firstName;
@@ -37,7 +40,6 @@ public class EmployeeModel implements Serializable {
     public String toString() {
         return "\nEmployee{" +
                 "id=" + id +
-                ", uid='" + uid + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", surName='" + surName + '\'' +

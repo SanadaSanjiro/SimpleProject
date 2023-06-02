@@ -14,9 +14,6 @@ public class EmployeeMapper {
         if (!ObjectUtils.isEmpty(dto.getId())) {
             model.setId(dto.getId());
         }
-        if (!ObjectUtils.isEmpty(dto.getUid())) {
-            model.setUid(dto.getUid());
-        }
         if (!ObjectUtils.isEmpty(dto.getFirstname())) {
             model.setFirstName(dto.getFirstname());
         }
@@ -55,9 +52,6 @@ public class EmployeeMapper {
         EmployeeDTO dto = new EmployeeDTO();
         if (!ObjectUtils.isEmpty(model.getId())) {
             dto.setId(model.getId());
-        }
-        if (!ObjectUtils.isEmpty(model.getUid())) {
-            dto.setUid(model.getUid());
         }
         if (!ObjectUtils.isEmpty(model.getFirstName())) {
             dto.setFirstname(model.getFirstName());
