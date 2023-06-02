@@ -1,4 +1,4 @@
-package com.digdes.simple.testing.service.employee;
+package com.digdes.simple.testing.service.impl;
 
 import com.digdes.simple.dao.employee.EmployeeDAO;
 import com.digdes.simple.dto.employee.EmployeeCrtDTO;

@@ -20,6 +20,7 @@ public class UserAuthService implements UserDetailsService {
 
     private final PassEncoder passEncoder;
 
+    //Метод возвращает учетную запись, пароль и список разрешений (пока пустой) пользователя
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
             EmployeeModel em = employeeDAO.getByAccount(account);
@@ -28,6 +29,7 @@ public class UserAuthService implements UserDetailsService {
                 Collections.emptyList());
     }
 
+    //метод создает учетную запись администратора, если таковая отсутсвует
     @PostConstruct
     public void initAdmin() {
         EmployeeModel em=employeeDAO.getByAccount("admin");
