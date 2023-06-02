@@ -1,9 +1,6 @@
 package com.digdes.simple.mapping.model;
 
-import com.digdes.simple.dto.employee.EmployeeDTO;
 import com.digdes.simple.dto.task.TaskDTO;
-import com.digdes.simple.model.employee.EmployeeModel;
-import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.model.task.TaskModel;
 import com.digdes.simple.model.task.TaskStatus;
 import org.springframework.util.ObjectUtils;

@@ -1,19 +1,18 @@
-package com.digdes.simple.mapping.employee;
+package com.digdes.simple.model.employee;
 
-import com.digdes.simple.dto.employee.EmployeeCrtDTO;
-import com.digdes.simple.model.employee.EmployeeModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+
 @SpringBootTest
-class EmployeeCrtMapperTest {
+class EmployeeModelTest {
 
     @Test
-    @DisplayName("EmployeeCrtMapper maps all fields")
-    void EmployeeCrtMapper_MapDTOtoModel() {
-        EmployeeCrtDTO dto = new EmployeeCrtDTO();
+    @DisplayName("EmployeeModel setters and getters are ok")
+    public void EmployeeModel_CheckSettersGetters() {
+        final Long id = 1L;
         final String firstname = "FirstName";
         final String lastname = "LastName";
         final String surname = "surname";
@@ -21,14 +20,18 @@ class EmployeeCrtMapperTest {
         final String account = "account";
         final String email = "email";
         final String password = "password";
-        dto.setFirstname(firstname);
-        dto.setLastname(lastname);
-        dto.setSurname(surname);
-        dto.setPosition(position);
-        dto.setAccount(account);
-        dto.setEmail(email);
-        dto.setPassword(password);
-        EmployeeModel em = EmployeeCrtMapper.map(dto);
+        final EmployeeStatus status = EmployeeStatus.ACTIVE;
+        EmployeeModel em = new EmployeeModel();
+        em.setId(id);
+        em.setFirstName(firstname);
+        em.setLastName(lastname);
+        em.setSurName(surname);
+        em.setPosition(position);
+        em.setAccount(account);
+        em.setEMail(email);
+        em.setPassword(password);
+        em.setStatus(status);
+        Assertions.assertEquals(id, em.getId());
         Assertions.assertEquals(firstname, em.getFirstName());
         Assertions.assertEquals(lastname, em.getLastName());
         Assertions.assertEquals(surname, em.getSurName());
@@ -36,5 +39,6 @@ class EmployeeCrtMapperTest {
         Assertions.assertEquals(account, em.getAccount());
         Assertions.assertEquals(email, em.getEMail());
         Assertions.assertEquals(password, em.getPassword());
+        Assertions.assertEquals(status, em.getStatus());
     }
 }

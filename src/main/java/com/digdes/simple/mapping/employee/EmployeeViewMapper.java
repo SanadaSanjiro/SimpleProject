@@ -5,6 +5,7 @@ import com.digdes.simple.model.employee.EmployeeModel;
 import org.springframework.util.ObjectUtils;
 
 //Класс для преобразования модели в ДТО для возврата в качестве результатов запроса
+//Передает все поля модели за исключением пароля
 
 public class EmployeeViewMapper {
     public static EmployeeViewDTO map (EmployeeModel model) {

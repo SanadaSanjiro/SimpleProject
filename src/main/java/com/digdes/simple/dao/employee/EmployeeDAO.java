@@ -51,6 +51,7 @@ public class EmployeeDAO {
         return null;
     }
 
+    /** данный метод не используется (удаленные сотрудники помечаются статусом DELETED
     public EmployeeModel deleteById (Long id) {
         EmployeeModel employeeModel = getById(id);
         try {
@@ -61,6 +62,7 @@ public class EmployeeDAO {
         }
         return null;
     }
+    **/
 
     public List<EmployeeModel> getFiltered(EmployeeSrchDTO dto) {
         try {

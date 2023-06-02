@@ -20,7 +20,7 @@ public class EmployeeModel implements Serializable {
     private Long id;
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private String uid;
+    private String uid; //не используется, заложено для следующих версий программы
     @Column(name="firstname")
     private String firstName;
     @Column(name="lastname")
