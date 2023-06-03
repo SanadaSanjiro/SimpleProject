@@ -3,15 +3,11 @@ package com.digdes.simple.dto.employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
 class EmployeeCrtDTOTest {
     @Test
     @DisplayName("EmployeeCrtDTO setters and getters are ok")
-    public void EmployeeCrtDTO_CheckSettersGetters() {
+    public void employeeCrtDTO_CheckSettersGetters() {
         final String firstname = "FirstName";
         final String lastname = "LastName";
         final String surname = "surname";

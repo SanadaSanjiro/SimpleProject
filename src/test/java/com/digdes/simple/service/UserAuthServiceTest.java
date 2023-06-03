@@ -1,5 +1,6 @@
 package com.digdes.simple.service;
 
+import com.digdes.simple.BaseTest;
 import com.digdes.simple.dao.employee.EmployeeDAO;
 import com.digdes.simple.model.employee.EmployeeModel;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class UserAuthServiceTest {
+class UserAuthServiceTest extends BaseTest {
     @Mock
     EmployeeDAO employeeDAO;
 

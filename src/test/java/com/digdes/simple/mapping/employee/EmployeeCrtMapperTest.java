@@ -5,14 +5,12 @@ import com.digdes.simple.model.employee.EmployeeModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class EmployeeCrtMapperTest {
 
     @Test
     @DisplayName("EmployeeCrtMapper maps all fields")
-    void EmployeeCrtMapper_MapDTOtoModel() {
+    void employeeCrtMapper_MapDTOtoModel() {
         EmployeeCrtDTO dto = new EmployeeCrtDTO();
         final String firstname = "FirstName";
         final String lastname = "LastName";

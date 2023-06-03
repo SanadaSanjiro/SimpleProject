@@ -4,11 +4,7 @@ import com.digdes.simple.dto.employee.EmployeeSrchDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
 class EmployeeSpecificationTest {
     @Test
     @DisplayName("Test Specification with non-empty DTO")

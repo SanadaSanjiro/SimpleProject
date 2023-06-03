@@ -1,8 +1,7 @@
 databaseChangeLog:
 - changeSet:
-    id: 1685330309497-1
-    author: Admin (generated)
-    runOnChange: true
+    id: 1685330309497
+    author: Admin
     changes:
     - createTable:
         columns:
@@ -43,9 +42,8 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: employees
 - changeSet:
-    id: 1685330309497-2
-    author: Admin (generated)
-    runOnChange: true
+    id: 1685330309498
+    author: Admin
     changes:
     - createTable:
         columns:
@@ -86,9 +84,8 @@ databaseChangeLog:
             type: BIGINT
         tableName: tasks
 - changeSet:
-    id: 1685330309497-4
-    author: Admin (generated)
-    runOnChange: true
+    id: 1685330309499
+    author: Admin
     changes:
     - createTable:
         columns:
@@ -111,9 +108,8 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: members
 - changeSet:
-    id: 1685330309497-5
+    id: 1685330309500
     author: Admin (generated)
-    runOnChange: true
     changes:
     - createTable:
         columns:
@@ -137,68 +133,3 @@ databaseChangeLog:
             name: uuid
             type: VARCHAR(255)
         tableName: projects
-- changeSet:
-    id: 1685330309497-7
-    author: Admin (generated)
-    runOnChange: true
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: prjcode
-        baseTableName: members
-        constraintName: fkff79kota9k28i5bqe40j6i08e
-        deferrable: false
-        initiallyDeferred: false
-        onDelete: NO ACTION
-        onUpdate: NO ACTION
-        referencedColumnNames: code
-        referencedTableName: projects
-        validate: true
-- changeSet:
-    id: 1685330309497-8
-    author: Admin (generated)
-    runOnChange: true
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: empid
-        baseTableName: members
-        constraintName: fkgdweqk5t8f44qedukmk30hbyn
-        deferrable: false
-        initiallyDeferred: false
-        onDelete: NO ACTION
-        onUpdate: NO ACTION
-        referencedColumnNames: id
-        referencedTableName: employees
-        validate: true
-- changeSet:
-    id: 1685330309497-9
-    author: Admin (generated)
-    runOnChange: true
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: employee_id
-        baseTableName: tasks
-        constraintName: fkjc3xiile6e5jbtmywxw5vfm7f
-        deferrable: false
-        initiallyDeferred: false
-        onDelete: NO ACTION
-        onUpdate: NO ACTION
-        referencedColumnNames: id
-        referencedTableName: employees
-        validate: true
-- changeSet:
-    id: 1685330309497-10
-    author: Admin (generated)
-    runOnChange: true
-    changes:
-    - addForeignKeyConstraint:
-        baseColumnNames: author_id
-        baseTableName: tasks
-        constraintName: fkk8bed87r09fsbftkeyrfj7smk
-        deferrable: false
-        initiallyDeferred: false
-        onDelete: NO ACTION
-        onUpdate: NO ACTION
-        referencedColumnNames: id
-        referencedTableName: employees
-        validate: true
-

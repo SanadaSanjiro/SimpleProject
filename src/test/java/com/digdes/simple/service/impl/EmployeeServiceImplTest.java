@@ -1,5 +1,6 @@
 package com.digdes.simple.service.impl;
 
+import com.digdes.simple.BaseTest;
 import com.digdes.simple.dao.employee.EmployeeDAO;
 import com.digdes.simple.dto.employee.EmployeeCrtDTO;
 import com.digdes.simple.dto.employee.EmployeeSrchDTO;
@@ -8,7 +9,6 @@ import com.digdes.simple.dto.employee.EmployeeViewDTO;
 import com.digdes.simple.model.employee.EmployeeModel;
 import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.service.PassEncoder;
-import com.digdes.simple.service.impl.EmployeeServiceImpl;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class EmployeeServiceImplTest {
+public class EmployeeServiceImplTest extends BaseTest {
     @Mock
     EmployeeDAO employeeDAO;
 

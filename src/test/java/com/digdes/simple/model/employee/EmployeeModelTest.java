@@ -3,15 +3,13 @@ package com.digdes.simple.model.employee;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 
-@SpringBootTest
 class EmployeeModelTest {
 
     @Test
     @DisplayName("EmployeeModel setters and getters are ok")
-    public void EmployeeModel_CheckSettersGetters() {
+    public void employeeModel_CheckSettersGetters() {
         final Long id = 1L;
         final String firstname = "FirstName";
         final String lastname = "LastName";

@@ -6,14 +6,12 @@ import com.digdes.simple.model.employee.EmployeeStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 class EmployeeViewMapperTest {
 
     @Test
     @DisplayName("EmployeeViewMapper maps all fields")
-    void map() {
+    void employeeViewMappper_MapModelToDTO() {
         final Long id = 1L;
         final String firstname = "FirstName";
         final String lastname = "LastName";

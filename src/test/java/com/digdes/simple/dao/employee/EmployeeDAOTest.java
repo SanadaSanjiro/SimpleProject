@@ -1,5 +1,6 @@
 package com.digdes.simple.dao.employee;
 
+import com.digdes.simple.BaseTest;
 import com.digdes.simple.dto.employee.EmployeeSrchDTO;
 import com.digdes.simple.model.employee.EmployeeModel;
 import com.digdes.simple.model.employee.EmployeeStatus;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
@@ -18,7 +20,16 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class EmployeeDAOTest {
+public class EmployeeDAOTest extends BaseTest {
+
+    @Value("${spring.datasource.url}")
+    private String url;
+
+    @Test
+    void checkDatasourceUrl() {
+        Assertions.assertNotEquals(
+                "jdbc:postgresql://localhost:5432/taskmanagerdb", url);
+    }
     @Mock
     EmployeeRepository employeeRepository;
 
@@ -53,7 +64,7 @@ class EmployeeDAOTest {
 
     @Test
     @DisplayName("Create Employee AllGoodConditions")
-    public void CreateEmployee_AllGoodConditions() {
+    public void createEmployee_AllGoodConditions() {
         Long id = 1L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
@@ -69,7 +80,7 @@ class EmployeeDAOTest {
 
     @Test
     @DisplayName("Create Employee but not created")
-    public void CreateEmployee_NotCreated() {
+    public void createEmployee_NotCreated() {
         EmployeeModel dbModel = new EmployeeModel();
         when(employeeRepository.save(any())).thenReturn(null);
         Assertions.assertNull(employeeDAO.create(dbModel));
@@ -78,7 +89,7 @@ class EmployeeDAOTest {
 
     @Test
     @DisplayName("Update Employee AllGoodConditions")
-    public void UpdateEmployee_AllGoodConditions() {
+    public void updateEmployee_AllGoodConditions() {
         Long id = 1L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
@@ -94,7 +105,7 @@ class EmployeeDAOTest {
 
     @Test
     @DisplayName("Update Employee but not created")
-    public void UpdateEmployee_NotUpdated() {
+    public void updateEmployee_NotUpdated() {
         EmployeeModel dbModel = new EmployeeModel();
         when(employeeRepository.save(any())).thenReturn(null);
         Assertions.assertNull(employeeDAO.create(dbModel));
