@@ -1,7 +1,5 @@
 package com.digdes.simple.dao.member;
 
-import com.digdes.simple.dto.project.ProjectDTO;
-import com.digdes.simple.model.employee.EmployeeModel;
 import com.digdes.simple.model.member.MemberModel;
 import com.digdes.simple.model.member.MembersKey;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +14,15 @@ public class MemberDAO {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    public MemberModel create(MemberModel model) {
+        try {
+            return memberRepository.save(model);
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return null;
+    }
 
     public MemberModel getById(MembersKey key) {
         try {
@@ -37,9 +44,9 @@ public class MemberDAO {
         return null;
     }
 
-    public List<MemberModel> getAllByCode(String code) {
+    public List<MemberModel> getByPrjCode(String code) {
         try {
-            return memberRepository.findAll();
+        //    return memberRepository.getByProject(code).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
