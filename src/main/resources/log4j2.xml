@@ -10,7 +10,7 @@
         <!-- $ {web: rootDir} является корневым путем веб-проекта. Java-проект не имеет этой переменной и должен быть удален,
          иначе будет сообщено об исключении-->
         <!--  <property name="basePath">${web:rootDir}/log4j2Logs</property> -->
-        <property name="basePath">../SpecialSiteParcing2/logs</property>
+        <property name="basePath">./logs</property>
         <!-- <property name="basePath">d:/qfxSpringMVCMybaitsDemoLogs</property> -->
 
         <!-- Формат вывода консоли по умолчанию: «% -5level»: уровень журнала, «% l»: вывод полного местоположения ошибки

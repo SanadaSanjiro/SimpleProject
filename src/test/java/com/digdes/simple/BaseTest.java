@@ -22,7 +22,8 @@ public class BaseTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13.3")
             .withDatabaseName(dbName)
             .withUsername(dbUserName)
-            .withPassword(dbPassword);
+            .withPassword(dbPassword)
+            .withExposedPorts(5432);
 
     @BeforeAll
     static void beforeAll() {

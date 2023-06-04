@@ -37,7 +37,9 @@ public class EmployeeRepositoryTestcontainer {
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+                    "spring.datasource.url="
+                            + String.format("jdbc:postgresql://localhost:%d/taskmanagerdb?loggerLevel=OFF",
+                            postgreSQLContainer.getFirstMappedPort()),
                     "spring.datasource.username=" + postgreSQLContainer.getUsername(),
                     "spring.datasource.password=" + postgreSQLContainer.getPassword(),
                     "spring.liquibase.enabled=true"
