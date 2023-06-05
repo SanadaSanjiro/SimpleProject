@@ -1,6 +1,7 @@
 package com.digdes.simple.model.task;
 
 import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.project.ProjectModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class TaskModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private ProjectModel project; // Проект, в рамках которого создана задача
     private String name;
     private String details; //Описание задачи
     @ManyToOne()

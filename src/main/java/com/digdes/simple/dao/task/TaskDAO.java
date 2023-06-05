@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,6 +18,20 @@ public class TaskDAO {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    public TaskModel getById(Long id) {
+        try {
+            Optional<TaskModel> optional= taskRepository.findById(id);
+            if (optional.isPresent()) {
+                return optional.get();
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public TaskModel create(TaskModel taskModel) {
         try {
@@ -45,7 +60,7 @@ public class TaskDAO {
         return null;
     }
 
-    public List<TaskModel> getFilterd() {
+    public List<TaskModel> getFiltered() {
         List<TaskModel> list = new ArrayList<>();
         return list;
     }
