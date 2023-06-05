@@ -6,8 +6,11 @@ import com.digdes.simple.dao.project.ProjectDAO;
 import com.digdes.simple.dto.member.MemberDTO;
 import com.digdes.simple.dto.member.MemberDltDTO;
 import com.digdes.simple.mapping.member.MemberMapper;
+import com.digdes.simple.model.employee.EmployeeModel;
+import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.model.member.MemberModel;
 import com.digdes.simple.model.member.MembersKey;
+import com.digdes.simple.model.project.ProjectModel;
 import com.digdes.simple.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +41,17 @@ public class MemberServiceImpl implements MemberService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         // Проверяем, что сотрудник с таким id существеует
-        if (employeeDAO.getById(dto.getEmpid())==null) {
+        EmployeeModel employeeModel = employeeDAO.getById(dto.getEmpid());
+        if (employeeModel==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+        if (employeeModel.getStatus()==EmployeeStatus.DELETED) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        ProjectModel projectModel = projectDAO.getByCode(dto.getPrjcode());
         // Проверяем, что проект с таким кодом существеует
-        if (projectDAO.getByCode(dto.getPrjcode())==null) {
+        if (projectModel==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
@@ -55,6 +64,8 @@ public class MemberServiceImpl implements MemberService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         MemberModel model = MemberMapper.map(dto);
+        model.setEmployee(employeeModel);
+        model.setProject(projectModel);
         model = memberDAO.create(model);
         return MemberMapper.map(model);
     }
@@ -74,10 +85,20 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberDTO> getByPrjCode(String code) {
-        List<MemberDTO> dtos = memberDAO.getByPrjCode(code)
+        if (code == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        ProjectModel projectModel = projectDAO.getByCode(code);
+        if (projectModel == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        List<MemberDTO> dtos = memberDAO.getByProject(projectModel)
                 .stream()
                 .map(m-> MemberMapper.map(m))
                 .toList();
+        if (dtos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         return dtos;
     }
 
@@ -90,6 +111,9 @@ public class MemberServiceImpl implements MemberService {
         mk.setEmpid(id);
         mk.setPrjcode(code);
         MemberModel model = memberDAO.getById(mk);
+        if (model==null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         return MemberMapper.map(model);
     }
 }

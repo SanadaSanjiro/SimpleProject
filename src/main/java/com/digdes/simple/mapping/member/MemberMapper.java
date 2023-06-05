@@ -32,6 +32,7 @@ public class MemberMapper {
                     break;
                 case ("TESTER"):
                     model.setRole(Role.TESTER);
+                    break;
                 default: {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
                 }
