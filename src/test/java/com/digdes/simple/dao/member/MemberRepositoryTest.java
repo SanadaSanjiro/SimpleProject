@@ -2,7 +2,6 @@ package com.digdes.simple.dao.member;
 
 import com.digdes.simple.dao.employee.EmployeeDAO;
 import com.digdes.simple.dao.project.ProjectDAO;
-import com.digdes.simple.model.employee.EmployeeModel;
 import com.digdes.simple.model.member.MemberModel;
 import com.digdes.simple.model.member.MembersKey;
 import com.digdes.simple.model.project.ProjectModel;

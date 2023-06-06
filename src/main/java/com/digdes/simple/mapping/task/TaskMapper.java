@@ -11,6 +11,9 @@ public class TaskMapper {
         if (!ObjectUtils.isEmpty(model.getId())) {
             dto.setId(model.getId());
         }
+        if (!ObjectUtils.isEmpty(model.getProject())) {
+            dto.setCode(model.getProject().getCode());
+        }
         if (!ObjectUtils.isEmpty(model.getName())) {
             dto.setName(model.getName());
         }
@@ -23,20 +26,20 @@ public class TaskMapper {
         if (!ObjectUtils.isEmpty(model.getLaborCost())) {
             dto.setLaborCost(model.getLaborCost());
         }
-        if (!ObjectUtils.isEmpty(model.getExecutionDate())) {
-            dto.setExecutionDate(model.getExecutionDate());
+        if (!ObjectUtils.isEmpty(model.getExecutiondate())) {
+            dto.setExecutionDate(model.getExecutiondate());
         }
         if (!ObjectUtils.isEmpty(model.getAuthor())) {
-            dto.setEmployee(model.getAuthor().getId());
+            dto.setAuthor(model.getAuthor().getId());
         }
-        if (!ObjectUtils.isEmpty(model.getCreationDate())) {
-            dto.setCreationDate(model.getCreationDate());
+        if (!ObjectUtils.isEmpty(model.getCreationdate())) {
+            dto.setCreationDate(model.getCreationdate());
         }
-        if (!ObjectUtils.isEmpty(model.getChangeDate())) {
-            dto.setCreationDate(model.getChangeDate());
+        if (!ObjectUtils.isEmpty(model.getChangedate())) {
+            dto.setChangeDate(model.getChangedate());
         }
         if (!ObjectUtils.isEmpty(model.getStatus())) {
-            model.getStatus().toString();
+            dto.setStatus(model.getStatus().toString());
         }
         return dto;
     }

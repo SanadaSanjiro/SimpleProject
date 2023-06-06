@@ -68,7 +68,7 @@ public class ProjectDAO {
         try {
             return projectRepository.findAll();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return null;
     }

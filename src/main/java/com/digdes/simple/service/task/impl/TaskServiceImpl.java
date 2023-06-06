@@ -6,6 +6,7 @@ import com.digdes.simple.dao.task.TaskDAO;
 import com.digdes.simple.dto.task.TaskCrtDTO;
 import com.digdes.simple.dto.task.TaskDTO;
 import com.digdes.simple.dto.task.TaskSrchDTO;
+import com.digdes.simple.dto.task.TaskUpdDTO;
 import com.digdes.simple.mapping.task.TaskMapper;
 import com.digdes.simple.model.employee.EmployeeModel;
 import com.digdes.simple.model.project.ProjectModel;
@@ -15,11 +16,11 @@ import com.digdes.simple.service.task.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -43,53 +44,173 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO create(TaskCrtDTO dto) {
+        //Проверка корректности заполнения DTO
         if (dto == null || dto.getName() == null || dto.getCode() == null
                 || dto.getLaborCost() == 0 || dto.getExecutionDate() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
+        //Проверка, что существует проект, на которой ссылается задача
         if (projectDAO.getByCode(dto.getCode())==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        ProjectModel project = projectDAO.getByCode(dto.getCode());
 
+        //Проверка, что существует исполнитель, если он указан
         if (employeeDAO.getById(dto.getEmployee())==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        EmployeeModel employee = employeeDAO.getById(dto.getEmployee());
-        int labourCost = dto.getLaborCost();
+
+        int labourCost = dto.getLaborCost(); //Трудозатраты
         LocalDate now = LocalDate.now(); // текущая дата
         LocalDate planDate = now.plusDays(labourCost/workingDay); // расчетная дата завершения задачи с учетом
                                                                             // трудозатрат
         LocalDate endDate = dto.getExecutionDate(); // получанная дата завершения задачи
+        //Проверка что дата исполнения не ранее текущей + трудозатраты
         if (endDate.isBefore(planDate)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
+        ProjectModel project = projectDAO.getByCode(dto.getCode());
+        String name = dto.getName();
+        String details = dto.getDetails();
+        EmployeeModel employee = employeeDAO.getById(dto.getEmployee());
+        TaskStatus status = TaskStatus.NEW;
+        //Получение сотрудника-автора по его логину
+        EmployeeModel author = employeeDAO.getByAccount(SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName());
+
         TaskModel model = new TaskModel();
         model.setProject(project);
-        model.setDetails(dto.getDetails());
+        model.setName(name);
+        model.setDetails(details);
         model.setEmployee(employee);
         model.setLaborCost(labourCost);
-        model.setExecutionDate(endDate);
-        model.setStatus(TaskStatus.NEW);
-        model.setChangeDate(now);
-        model.setChangeDate(now);
-        // вставить сюда автора задачи
-        return null;
+        model.setExecutiondate(endDate);
+        model.setStatus(status);
+        model.setCreationdate(now);
+        model.setChangedate(now);
+        model.setAuthor(author);
+        System.out.println(model);
+        return TaskMapper.map(taskDAO.create(model));
     }
 
     @Override
-    public TaskDTO update(TaskCrtDTO dto) {
-        return null;
+    public TaskDTO update(TaskUpdDTO dto) {
+        //Проверка корректности заполнения DTO
+        if (dto == null || dto.getName() == null || dto.getCode() == null || dto.getId() == null
+                || dto.getLaborCost() == 0 || dto.getExecutionDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        //Проверка, что существует задача для обновления
+        if (taskDAO.getById(dto.getId())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        TaskModel currentVersion = taskDAO.getById(dto.getId());
+
+        //Проверка, что существует проект, на которой ссылается задача
+        if (projectDAO.getByCode(dto.getCode())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        //Проверка, что существует исполнитель, если он указан
+        if (employeeDAO.getById(dto.getEmployee())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        int labourCost = dto.getLaborCost(); //Трудозатраты
+        LocalDate now = LocalDate.now(); // текущая дата
+        LocalDate planDate = now.plusDays(labourCost/workingDay); // расчетная дата завершения задачи с учетом
+        // трудозатрат
+        LocalDate endDate = dto.getExecutionDate(); // получанная дата завершения задачи
+        //Проверка что дата исполнения не ранее текущей + трудозатраты
+        if (endDate.isBefore(planDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        Long id = currentVersion.getId();
+        ProjectModel project = projectDAO.getByCode(dto.getCode());
+        String name = dto.getName();
+        String details = dto.getDetails();
+        EmployeeModel employee = employeeDAO.getById(dto.getEmployee());
+        TaskStatus status = currentVersion.getStatus();
+        LocalDate creationDate = currentVersion.getCreationdate();
+        //Получение сотрудника-автора по его логину
+        EmployeeModel author = employeeDAO.getByAccount(SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName());
+
+        TaskModel model = new TaskModel();
+        model.setId(id);
+        model.setProject(project);
+        model.setName(name);
+        model.setDetails(details);
+        model.setEmployee(employee);
+        model.setLaborCost(labourCost);
+        model.setExecutiondate(endDate);
+        model.setStatus(status);
+        model.setCreationdate(creationDate);
+        model.setChangedate(now);
+        model.setAuthor(author);
+        System.out.println(model);
+        return TaskMapper.map(taskDAO.update(model));
     }
 
     @Override
     public List<TaskDTO> getFiltered(TaskSrchDTO dto) {
-        return null;
+        if (dto == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        List<TaskDTO> dtos = taskDAO.getFiltered(dto)
+                .stream()
+                .map(m-> TaskMapper.map(m))
+                .toList();
+        return dtos;
     }
 
     @Override
     public TaskDTO changeStatus(Long id) {
-        return null;
+        if (id == null || taskDAO.getById(id) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        TaskModel model = taskDAO.getById(id);
+        TaskStatus status = model.getStatus();
+        switch (status) {
+            case NEW: {
+                status = TaskStatus.PROCESSED;
+                break;
+            }
+            case PROCESSED: {
+                status = TaskStatus.COMPLETE;
+                break;
+            }
+            case COMPLETE: {
+                status = TaskStatus.CLOSED;
+                break;
+            }
+        }
+        model.setStatus(status);
+        return TaskMapper.map(taskDAO.changeStatus(model));
+    }
+
+    @Override
+    public List<TaskDTO> getByPrjCode(String code) {
+        if (code == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        ProjectModel projectModel = projectDAO.getByCode(code);
+        if (projectModel == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        List<TaskDTO> dtos = taskDAO.getByProject(projectModel)
+                .stream()
+                .map(m-> TaskMapper.map(m))
+                .toList();
+        if (dtos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return dtos;
     }
 }

@@ -1,7 +1,6 @@
 package com.digdes.simple.dao.project;
 
 import com.digdes.simple.dto.project.ProjectSrchDTO;
-import com.digdes.simple.model.employee.EmployeeStatus;
 import com.digdes.simple.model.project.ProjectModel;
 import com.digdes.simple.model.project.ProjectStatus;
 import jakarta.persistence.criteria.Predicate;
@@ -14,22 +13,25 @@ import java.util.List;
 
 public class ProjectSpecification {
     public static Specification<ProjectModel> getFilters (ProjectSrchDTO dto) {
-        ProjectStatus status = ProjectStatus.DRAFT;
-        switch (dto.getStatus()) {
-            case "DEVELOPING": {
-                status = ProjectStatus.DEVELOPING;
-                break;
+        final ProjectStatus ps;
+        if (dto.getStatus()!=null) {
+            ProjectStatus status = ProjectStatus.DRAFT;
+            switch (dto.getStatus()) {
+                case "DEVELOPING": {
+                    status = ProjectStatus.DEVELOPING;
+                    break;
+                }
+                case "TESTING": {
+                    status = ProjectStatus.TESTING;
+                    break;
+                }
+                case "COMPLETE": {
+                    status = ProjectStatus.COMPLETE;
+                    break;
+                }
             }
-            case "TESTING": {
-                status = ProjectStatus.TESTING;
-                break;
-            }
-            case "COMPLETE": {
-                status = ProjectStatus.COMPLETE;
-                break;
-            }
-        }
-        final ProjectStatus ps = status;
+            ps = status;
+        } else ps = null;
         return ((root, query, criteriaBuilder ) -> {
             List<Predicate> predicates = new ArrayList<>();
             if(!ObjectUtils.isEmpty(dto.getName()))
