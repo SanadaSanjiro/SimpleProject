@@ -1,12 +1,11 @@
-package com.digdes.simple.test.dao.employee;
+package com.digdes.simple.test.dao.project;
 
-import com.digdes.simple.employee.*;
+import com.digdes.simple.project.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
@@ -18,18 +17,16 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
-//Инициализация тест контейнера с помощью класса-инициализатора
-
 @SpringBootTest
-@ContextConfiguration(initializers = {EmployeeRepositoryTestcontainer.Initializer.class})
+@ContextConfiguration(initializers = {ProjectRepositoryTestcontainer.Initializer.class})
 @Testcontainers
-public class EmployeeRepositoryTestcontainer {
+public class ProjectRepositoryTestcontainer {
 
     @Autowired
-    EmployeeRepository repository;
+    ProjectRepository repository;
 
-    EmployeeModel employeeModel;
-    Long id;
+    ProjectModel projectModel;
+    String code;
 
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13.3")
@@ -50,54 +47,41 @@ public class EmployeeRepositoryTestcontainer {
         }
     }
 
-    @Value("${spring.datasource.url}")
-    private String url;
-
-    @Test
-    void checkDatasourceUrl() {
-        Assertions.assertNotEquals(
-                "jdbc:postgresql://localhost:5432/taskmanagerdb", url);
-    }
-
     @BeforeEach
     void testInit() {
-        final String firstName = "FirstName";
-        final String lastName = "LastName";
-        final EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
-        employeeModel = new EmployeeModel();
-        employeeModel.setFirstName(firstName);
-        employeeModel.setLastName(lastName);
-        employeeModel.setStatus(employeeStatus);
+        projectModel = new ProjectModel();
+        code = "001";
+        String prjName = "project001";
+        ProjectStatus status = ProjectStatus.DRAFT;
+        projectModel.setCode(code);
+        projectModel.setName(prjName);
+        projectModel.setStatus(status);
     }
 
     @AfterEach
     void afterTests() {
-        repository.delete(employeeModel);
+        repository.delete(projectModel);
     }
 
     @Test
-    void memberRepoMethodsTest() {
+    void projectRepoMethodsTest() {
         //Проверяем что сохранение возвращает непустой результат
-        Assertions.assertNotNull(employeeModel = repository.save(employeeModel));
+        Assertions.assertNotNull(projectModel = repository.save(projectModel));
 
         //Проверяем что getById возвращает модель с правильным id
-        id = employeeModel.getId();
-        Optional<EmployeeModel> optional = repository.findById(id);
-        Assertions.assertEquals(id, optional.get().getId());
+        Optional<ProjectModel> optional = repository.getByCode(code);
+        Assertions.assertTrue(optional.isPresent());
+        Assertions.assertEquals(code, optional.get().getCode());
 
         //Проверяем корректность сохранения измененной модели
-        String newFirstName = "NewFirstName";
-        employeeModel.setFirstName(newFirstName);
-        employeeModel=repository.save(employeeModel);
-        Assertions.assertEquals(newFirstName, employeeModel.getFirstName());
+        String newName = "project002";
+        projectModel.setName(newName);
+        projectModel=repository.save(projectModel);
+        Assertions.assertEquals(newName, projectModel.getName());
 
         //Проверяем что поиск по ранее сохраненному критерию возвращает непустой результат
-        EmployeeSrchDTO dto = new EmployeeSrchDTO();
-        dto.setFirstname(newFirstName);
-        Assertions.assertNotNull(repository.findAll(EmployeeSpecification.getFilters(dto)));
-
-        //Проверяем, что объект отсутсвует в БД после использования метода deleteById
-        repository.deleteById(id);
-        Assertions.assertFalse(repository.findById(id).isPresent());
+        ProjectSrchDTO dto = new ProjectSrchDTO();
+        dto.setName(newName);
+        Assertions.assertNotNull(repository.findAll(ProjectSpecification.getFilters(dto)));
     }
 }

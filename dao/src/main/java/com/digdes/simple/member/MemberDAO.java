@@ -53,7 +53,7 @@ public class MemberDAO {
         try {
             Optional<List<MemberModel>> optional = memberRepository.getByProject(projectModel);
             if (optional.isPresent()) {
-                List<MemberModel> members = memberRepository.getByProject(projectModel).get();
+                List<MemberModel> members =optional.get();
                 return members;
             }
             return null;

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +17,11 @@ public class ProjectDAO {
 
     public ProjectModel getByCode(String code) {
         try {
-            return projectRepository.getByCode(code).get();
+            Optional<ProjectModel> optional = projectRepository.getByCode(code);
+            if (optional.isPresent()) {
+                return optional.get();
+            }
+            return null;
         } catch (Exception e) {
             //e.printStackTrace();
         }

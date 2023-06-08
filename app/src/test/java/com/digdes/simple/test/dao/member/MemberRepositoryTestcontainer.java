@@ -1,6 +1,13 @@
-package com.digdes.simple.test.dao.employee;
+package com.digdes.simple.test.dao.member;
 
-import com.digdes.simple.employee.*;
+//Инициализация тест контейнера с помощью класса-инициализатора
+
+import com.digdes.simple.employee.EmployeeModel;
+import com.digdes.simple.employee.EmployeeRepository;
+import com.digdes.simple.employee.EmployeeStatus;
+import com.digdes.simple.member.*;
+import com.digdes.simple.project.ProjectModel;
+import com.digdes.simple.project.ProjectRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,18 +25,24 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Optional;
 
-//Инициализация тест контейнера с помощью класса-инициализатора
-
 @SpringBootTest
-@ContextConfiguration(initializers = {EmployeeRepositoryTestcontainer.Initializer.class})
+@ContextConfiguration(initializers = {MemberRepositoryTestcontainer.Initializer.class})
 @Testcontainers
-public class EmployeeRepositoryTestcontainer {
+public class MemberRepositoryTestcontainer {
 
     @Autowired
-    EmployeeRepository repository;
+    MemberRepository memberRepository;
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
+    ProjectRepository projectRepository;
 
     EmployeeModel employeeModel;
-    Long id;
+    ProjectModel projectModel;
+    MemberModel memberModel;
+    MembersKey mk;
 
     @Container
     public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13.3")
@@ -61,43 +74,54 @@ public class EmployeeRepositoryTestcontainer {
 
     @BeforeEach
     void testInit() {
+        Long id = 1L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
         final EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
         employeeModel = new EmployeeModel();
+        employeeModel.setId(id);
         employeeModel.setFirstName(firstName);
         employeeModel.setLastName(lastName);
         employeeModel.setStatus(employeeStatus);
+        employeeModel=employeeRepository.save(employeeModel);
+
+        projectModel = new ProjectModel();
+        String code = "001";
+        String prjName = "project001";
+        projectModel.setCode(code);
+        projectModel.setName(prjName);
+        projectModel=projectRepository.save(projectModel);
+
+        mk = new MembersKey();
+        mk.setEmpid(id);
+        mk.setPrjcode(code);
+
+        Role role = Role.TESTER;
+        memberModel = new MemberModel();
+        memberModel.setId(mk);
+        memberModel.setRole(role);
+        memberModel.setEmployee(employeeModel);
+        memberModel.setProject(projectModel);
     }
 
     @AfterEach
     void afterTests() {
-        repository.delete(employeeModel);
+        memberRepository.delete(memberModel);
+        projectRepository.delete(projectModel);
+        employeeRepository.delete(employeeModel);
     }
 
     @Test
     void memberRepoMethodsTest() {
-        //Проверяем что сохранение возвращает непустой результат
-        Assertions.assertNotNull(employeeModel = repository.save(employeeModel));
+        //Проверяем что сохранение возвращает модель с правильным id
+        Assertions.assertEquals(mk, memberRepository.save(memberModel).getId());
 
         //Проверяем что getById возвращает модель с правильным id
-        id = employeeModel.getId();
-        Optional<EmployeeModel> optional = repository.findById(id);
-        Assertions.assertEquals(id, optional.get().getId());
-
-        //Проверяем корректность сохранения измененной модели
-        String newFirstName = "NewFirstName";
-        employeeModel.setFirstName(newFirstName);
-        employeeModel=repository.save(employeeModel);
-        Assertions.assertEquals(newFirstName, employeeModel.getFirstName());
-
-        //Проверяем что поиск по ранее сохраненному критерию возвращает непустой результат
-        EmployeeSrchDTO dto = new EmployeeSrchDTO();
-        dto.setFirstname(newFirstName);
-        Assertions.assertNotNull(repository.findAll(EmployeeSpecification.getFilters(dto)));
+        Optional<MemberModel> optional = memberRepository.findById(mk);
+        Assertions.assertEquals(mk, optional.get().getId());
 
         //Проверяем, что объект отсутсвует в БД после использования метода deleteById
-        repository.deleteById(id);
-        Assertions.assertFalse(repository.findById(id).isPresent());
+        memberRepository.deleteById(mk);
+        Assertions.assertFalse(memberRepository.findById(mk).isPresent());
     }
 }

@@ -2,6 +2,7 @@ package com.digdes.simple.test.web;
 
 import com.digdes.simple.EmployeeController;
 import com.digdes.simple.employee.*;
+import com.digdes.simple.test.BaseTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,14 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class EmployeeControllerTest {
+public class EmployeeControllerTest extends BaseTest {
 
     @Mock
     EmployeeService employeeService;
