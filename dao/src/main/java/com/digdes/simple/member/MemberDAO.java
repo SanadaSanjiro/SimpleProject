@@ -28,7 +28,7 @@ public class MemberDAO {
         try {
             Optional<MemberModel> model = memberRepository.findById(key);
             if (model.isPresent()) {
-                return memberRepository.findById(key).get();
+                return model.get();
             } else {
                 return null;
             }
@@ -39,8 +39,8 @@ public class MemberDAO {
     }
 
     public MemberModel deleteById (MembersKey key) {
-        MemberModel memberModel = getById(key);
         try {
+            MemberModel memberModel = memberRepository.findById(key).get();
             memberRepository.deleteById(key);
             return memberModel;
         } catch (Exception e) {
@@ -51,8 +51,12 @@ public class MemberDAO {
 
     public List<MemberModel> getByProject(ProjectModel projectModel) {
         try {
-            List<MemberModel> members = memberRepository.getByProject(projectModel).get();
-            return members;
+            Optional<List<MemberModel>> optional = memberRepository.getByProject(projectModel);
+            if (optional.isPresent()) {
+                List<MemberModel> members = memberRepository.getByProject(projectModel).get();
+                return members;
+            }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
