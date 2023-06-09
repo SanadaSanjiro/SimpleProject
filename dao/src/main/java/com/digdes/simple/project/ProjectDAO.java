@@ -65,6 +65,8 @@ public class ProjectDAO {
         return null;
     }
 
+
+
     public List<ProjectModel> getAll() {
         List<ProjectModel> list = new ArrayList<>();
         try {

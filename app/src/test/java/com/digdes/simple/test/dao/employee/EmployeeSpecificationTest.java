@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class EmployeeSpecificationTest {
     @Test
-    @DisplayName("Test Specification with non-empty DTO")
+    @DisplayName("Test Employee Specification with non-empty DTO")
     public void getFiltersEmployee_NonEmptyDTO() {
         final String firstname = "FirstName";
         final String lastname = "LastName";
@@ -25,7 +25,7 @@ class EmployeeSpecificationTest {
     }
 
     @Test
-    @DisplayName("Test Specification with empty DTO")
+    @DisplayName("Test Employee Specification with empty DTO")
     public void getFiltersEmployee_EmptyDTO() {
         EmployeeSrchDTO dto = new EmployeeSrchDTO();
         Assertions.assertNotNull(EmployeeSpecification.getFilters(dto));

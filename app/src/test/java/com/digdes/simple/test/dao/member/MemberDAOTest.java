@@ -4,12 +4,8 @@ import com.digdes.simple.employee.EmployeeModel;
 import com.digdes.simple.employee.EmployeeStatus;
 import com.digdes.simple.member.*;
 import com.digdes.simple.project.ProjectModel;
-import com.digdes.simple.task.TaskDAO;
-import com.digdes.simple.task.TaskModel;
-import com.digdes.simple.task.TaskRepository;
 import com.digdes.simple.test.BaseTest;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -138,14 +134,18 @@ public class MemberDAOTest extends BaseTest {
         Long id = 1L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
+        EmployeeStatus status = EmployeeStatus.ACTIVE;
         EmployeeModel employeeModel = new EmployeeModel();
         employeeModel.setId(id);
         employeeModel.setFirstName(firstName);
         employeeModel.setLastName(lastName);
+        employeeModel.setStatus(status);
 
         ProjectModel projectModel = new ProjectModel();
         String code = "001";
-        projectModel.setName(code);
+        String name = "Project001";
+        projectModel.setCode(code);
+        projectModel.setName(name);
 
         MembersKey mk = new MembersKey();
         mk.setEmpid(id);
