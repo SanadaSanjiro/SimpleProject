@@ -30,6 +30,6 @@ public class ProjectModel implements Serializable {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
-                '}';
+                "}\n";
     }
 }

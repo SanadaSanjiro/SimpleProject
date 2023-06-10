@@ -39,6 +39,8 @@ public class MemberServiceImpl implements MemberService {
         if (employeeModel==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+
+        // Проверяем, что сотрудник не был удален
         if (employeeModel.getStatus()== EmployeeStatus.DELETED) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -53,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
         mk.setEmpid(dto.getEmpid());
         mk.setPrjcode(dto.getPrjcode());
 
-        // Проверяем что данный сотрудник отсутсвует в этом проекте
+        // Проверяем что данный сотрудник отсутствует в этом проекте
         if ((memberDAO.getById(mk)!=null)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }

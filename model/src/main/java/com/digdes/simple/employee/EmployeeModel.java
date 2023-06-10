@@ -38,7 +38,7 @@ public class EmployeeModel implements Serializable {
 
     @Override
     public String toString() {
-        return "\nEmployee{" +
+        return "Employee{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
@@ -47,6 +47,6 @@ public class EmployeeModel implements Serializable {
                 ", account='" + account + '\'' +
                 ", eMail='" + eMail + '\'' +
                 ", status=" + status +
-                "}";
+                "}\n";
     }
 }

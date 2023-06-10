@@ -171,7 +171,7 @@ public class TaskDAOTest extends BaseTest {
 
 
     private TaskModel testInit() {
-        Long id = 1L;
+        Long id = 100L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
         EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
@@ -181,14 +181,14 @@ public class TaskDAOTest extends BaseTest {
         employeeModel.setLastName(lastName);
         employeeModel.setStatus(employeeStatus);
 
-        Long aId = 2L;
+        Long aId = 101L;
         final String afirstName = "FirstName";
         final String alastName = "LastName";
         EmployeeModel authorModel = new EmployeeModel();
-        employeeModel.setId(aId);
-        employeeModel.setFirstName(afirstName);
-        employeeModel.setLastName(alastName);
-        employeeModel.setStatus(employeeStatus);
+        authorModel.setId(aId);
+        authorModel.setFirstName(afirstName);
+        authorModel.setLastName(alastName);
+        authorModel.setStatus(employeeStatus);
 
         ProjectModel projectModel = new ProjectModel();
         String code = "001";
