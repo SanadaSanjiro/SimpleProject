@@ -146,7 +146,6 @@ public class TaskServiceImpl implements TaskService {
         model.setCreationdate(creationDate);
         model.setChangedate(now);
         model.setAuthor(author);
-        System.out.println(model);
         return TaskMapper.map(taskDAO.update(model));
     }
 

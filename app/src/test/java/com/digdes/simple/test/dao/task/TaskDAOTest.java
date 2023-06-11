@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -201,6 +202,9 @@ public class TaskDAOTest extends BaseTest {
         String taskName = "task01";
         String taskDescription = "some_description";
         TaskStatus taskStatus = TaskStatus.NEW;
+        int laborCost = 8;
+        LocalDate now = LocalDate.now();
+        LocalDate executionDate = now.plusDays(2);
         TaskModel taskModel = new TaskModel();
         taskModel.setId(id);
         taskModel.setProject(projectModel);
@@ -209,6 +213,10 @@ public class TaskDAOTest extends BaseTest {
         taskModel.setDetails(taskDescription);
         taskModel.setEmployee(employeeModel);
         taskModel.setAuthor(authorModel);
+        taskModel.setLaborCost(laborCost);
+        taskModel.setExecutiondate(executionDate);
+        taskModel.setChangedate(now);
+        taskModel.setCreationdate(now);
         return taskModel;
     }
 }
