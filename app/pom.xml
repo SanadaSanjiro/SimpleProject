@@ -19,12 +19,22 @@
     <dependencies>
         <dependency>
             <groupId>com.digdes.simple</groupId>
+            <artifactId>amqp</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.digdes.simple</groupId>
             <artifactId>dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.digdes.simple</groupId>
             <artifactId>dto</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.digdes.simple</groupId>
+            <artifactId>mail</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
