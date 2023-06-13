@@ -2,3 +2,6 @@
 /target/
 /logs/
 /app/logs/
+/2. Init Database/
+/docs/pgadmin/
+/docs/rabbitmq/

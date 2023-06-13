@@ -782,13 +782,11 @@ public class TaskServiceImplTest extends BaseTest {
         Long id = 100L;
         final String firstName = "FirstName";
         final String lastName = "LastName";
-        final String email = "employee@employee.com";
         EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
         EmployeeModel employeeModel = new EmployeeModel();
         employeeModel.setId(id);
         employeeModel.setFirstName(firstName);
         employeeModel.setLastName(lastName);
-        employeeModel.setEMail(email);
         employeeModel.setStatus(employeeStatus);
 
         ProjectModel projectModel = new ProjectModel();

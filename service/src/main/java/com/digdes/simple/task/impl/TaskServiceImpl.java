@@ -1,7 +1,9 @@
 package com.digdes.simple.task.impl;
 
+import com.digdes.simple.amqp.MessageProducer;
 import com.digdes.simple.employee.EmployeeDAO;
 import com.digdes.simple.employee.EmployeeModel;
+import com.digdes.simple.mail.MailMessageModel;
 import com.digdes.simple.project.ProjectDAO;
 import com.digdes.simple.project.ProjectModel;
 import com.digdes.simple.task.*;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -25,6 +28,8 @@ public class TaskServiceImpl implements TaskService {
     EmployeeDAO employeeDAO;
     @Autowired
     ProjectDAO projectDAO;
+    @Autowired
+    MessageProducer messageProducer;
 
     @Override
     public TaskDTO getById(Long id) {
@@ -36,32 +41,12 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO create(TaskCrtDTO dto) {
-        //Проверка корректности заполнения DTO
-        if (dto == null || dto.getName() == null || dto.getCode() == null
-                || dto.getLaborCost() == 0 || dto.getExecutionDate() == null) {
+        if (!dtoPassCheck(dto)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
-        //Проверка, что существует проект, на которой ссылается задача
-        if (projectDAO.getByCode(dto.getCode())==null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        //Проверка, что существует исполнитель, если он указан
-        if (employeeDAO.getById(dto.getEmployee())==null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
         int labourCost = dto.getLaborCost(); //Трудозатраты
         LocalDate now = LocalDate.now(); // текущая дата
-        LocalDate planDate = now.plusDays(labourCost/workingDay); // расчетная дата завершения задачи с учетом
-                                                                            // трудозатрат
-        LocalDate endDate = dto.getExecutionDate(); // получанная дата завершения задачи
-        //Проверка что дата исполнения не ранее текущей + трудозатраты
-        if (endDate.isBefore(planDate)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
+        LocalDate endDate = dto.getExecutionDate(); //срок исполнения
         ProjectModel project = projectDAO.getByCode(dto.getCode());
         String name = dto.getName();
         String details = dto.getDetails();
@@ -84,23 +69,20 @@ public class TaskServiceImpl implements TaskService {
         model.setCreationdate(now);
         model.setChangedate(now);
         model.setAuthor(author);
-        //System.out.println(model);
-        return TaskMapper.map(taskDAO.create(model));
+
+        model=taskDAO.create(model);
+        if (employee.getEMail()!=null) {
+            sendMessageRequest(employee, model, author.getAccount());
+        }
+        return TaskMapper.map(model);
     }
 
-    @Override
-    public TaskDTO update(TaskUpdDTO dto) {
-        //Проверка корректности заполнения DTO
-        if (dto == null || dto.getName() == null || dto.getCode() == null || dto.getId() == null
+    //Проверка корректности заполнения DTO
+    private boolean dtoPassCheck(TaskCrtDTO dto) {
+        if (dto == null || dto.getName() == null || dto.getCode() == null
                 || dto.getLaborCost() == 0 || dto.getExecutionDate() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-
-        //Проверка, что существует задача для обновления
-        if (taskDAO.getById(dto.getId())==null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        TaskModel currentVersion = taskDAO.getById(dto.getId());
 
         //Проверка, что существует проект, на которой ссылается задача
         if (projectDAO.getByCode(dto.getCode())==null) {
@@ -121,7 +103,29 @@ public class TaskServiceImpl implements TaskService {
         if (endDate.isBefore(planDate)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Long id = currentVersion.getId();
+        return true;
+    }
+
+    private void sendMessageRequest(EmployeeModel employeeModel, TaskModel model, String author) {
+        MailMessageModel mailMessageModel = new MailMessageModel();
+        mailMessageModel.setTo(employeeModel.getEMail());
+        mailMessageModel.setSubject("Вам поступила новая задача id = " + model.getId());
+        Formatter text = new Formatter();
+        text.format("Пользователем %s вам была назначена задача %s (id=%d).", author, model.getName(), model.getId());
+        mailMessageModel.setText(text.toString());
+        messageProducer.sendMessage(mailMessageModel);
+    }
+
+    @Override
+    public TaskDTO update(TaskUpdDTO dto) {
+        if (updDtoPassCheck(dto)!=true) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        TaskModel currentVersion = taskDAO.getById(dto.getId());
+        int labourCost = dto.getLaborCost(); //Трудозатраты
+        LocalDate now = LocalDate.now(); // текущая дата
+        Long id = currentVersion.getId(); //id задачи
+        LocalDate endDate = dto.getExecutionDate(); // получанная дата завершения задачи
         ProjectModel project = projectDAO.getByCode(dto.getCode());
         String name = dto.getName();
         String details = dto.getDetails();
@@ -146,7 +150,46 @@ public class TaskServiceImpl implements TaskService {
         model.setCreationdate(creationDate);
         model.setChangedate(now);
         model.setAuthor(author);
+
+        if (currentVersion.getEmployee().getId()!=employee.getId() && employee.getEMail()!=null) {
+            sendMessageRequest(employee, model, author.getAccount());
+        }
         return TaskMapper.map(taskDAO.update(model));
+    }
+
+    private boolean updDtoPassCheck(TaskUpdDTO dto) {
+        //Проверка корректности заполнения DTO
+        if (dto == null || dto.getName() == null || dto.getCode() == null || dto.getId() == null
+                || dto.getLaborCost() == 0 || dto.getExecutionDate() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        //Проверка, что существует задача для обновления
+        if (taskDAO.getById(dto.getId())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+
+        //Проверка, что существует проект, на которой ссылается задача
+        if (projectDAO.getByCode(dto.getCode())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        //Проверка, что существует исполнитель, если он указан
+        if (employeeDAO.getById(dto.getEmployee())==null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        int labourCost = dto.getLaborCost(); //Трудозатраты
+        LocalDate now = LocalDate.now(); // текущая дата
+        LocalDate planDate = now.plusDays(labourCost/workingDay); // расчетная дата завершения задачи с учетом
+        // трудозатрат
+        LocalDate endDate = dto.getExecutionDate(); // получанная дата завершения задачи
+        //Проверка что дата исполнения не ранее текущей + трудозатраты
+        if (endDate.isBefore(planDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        return true;
     }
 
     @Override

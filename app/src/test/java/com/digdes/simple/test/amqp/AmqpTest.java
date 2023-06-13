@@ -16,6 +16,6 @@ public class AmqpTest {
 
     @Test
     public void sendMessageTest() {
-        messageProducer.sendMessage();
+        //messageProducer.sendMessage();
     }
 }

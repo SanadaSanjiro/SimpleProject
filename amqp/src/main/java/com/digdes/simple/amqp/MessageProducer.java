@@ -20,12 +20,7 @@ public class MessageProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendMessage() {
-        MailMessageModel mailMessageModel = new MailMessageModel();
-        mailMessageModel.setTo("spacehatch@yandex.ru");
-        mailMessageModel.setSubject("Новая задача");
-        mailMessageModel.setText("Какой-то текст");
-
+    public void sendMessage(MailMessageModel mailMessageModel) {
         JSONObject jsonObject =JSONObject.from(mailMessageModel);
         String message = jsonObject.toJSONString();
         rabbitTemplate.convertAndSend(exchange, routingkey, mailMessageModel);
