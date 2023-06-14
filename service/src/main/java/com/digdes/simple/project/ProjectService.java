@@ -1,5 +1,8 @@
 package com.digdes.simple.project;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 public interface ProjectService {
@@ -14,4 +17,6 @@ public interface ProjectService {
     List<ProjectDTO> getFiltered(ProjectSrchDTO dto);
 
     List<ProjectDTO> getAll();
+
+    ProjectDTO addFile(String code, MultipartFile resource) throws IOException;
 }

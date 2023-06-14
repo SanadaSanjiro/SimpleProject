@@ -12,7 +12,6 @@ import lombok.ToString;
 public class FileModel {
     @EmbeddedId
     private FileKey key;
-    private String name;
     @ManyToOne
     @MapsId("prjcode")
     @JoinColumn(name = "prjcode")

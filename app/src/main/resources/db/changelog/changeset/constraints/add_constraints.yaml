@@ -60,3 +60,17 @@ databaseChangeLog:
         referencedColumnNames:  id
         referencedTableName:  tasks
         validate:  true
+-  changeSet:  
+    id:  1685330309497-17
+    author:  Admin
+    runOnChange: true
+    changes:
+    -  addForeignKeyConstraint:
+        baseColumnNames:  prjcode
+        baseTableName:  files
+        constraintName:  fk_files
+        onDelete:  CASCADE 
+        onUpdate:  RESTRICT
+        referencedColumnNames:  code
+        referencedTableName:  projects
+        validate:  true

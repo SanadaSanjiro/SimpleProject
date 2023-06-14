@@ -1,11 +1,15 @@
 package com.digdes.simple.project;
 
+import com.digdes.simple.file.FileModel;
+import com.digdes.simple.task.TaskModel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -22,6 +26,10 @@ public class ProjectModel implements Serializable {
     private String description;
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
+
+    @OneToMany
+    @JoinColumn(name = "prjcode")
+    private Set<FileModel> files = new HashSet<>();
 
     @Override
     public String toString() {

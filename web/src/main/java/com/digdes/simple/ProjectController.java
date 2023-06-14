@@ -7,9 +7,14 @@ import com.digdes.simple.project.ProjectSrchDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -56,5 +61,16 @@ public class ProjectController {
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProjectDTO> getAll() {
         return projectService.getAll();
+    }
+
+    @Operation(summary = "Прикрепить к проекту файл")
+    @PostMapping(value = "/upload/{code}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ProjectDTO addFile(@RequestParam MultipartFile attachment, @PathVariable String code) {
+        try {
+            return projectService.addFile(code, attachment);
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

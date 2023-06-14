@@ -43,8 +43,9 @@ public class TaskModel implements Serializable {
     private LocalDate creationdate;
     @Column(name="change_date")
     private LocalDate changedate;
-    @ManyToMany(cascade = CascadeType.ALL)
+
     //Список связанных задач
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="tasklink",
             joinColumns = {@JoinColumn(name="masterid")},
             inverseJoinColumns = {@JoinColumn(name="slaveid")})
