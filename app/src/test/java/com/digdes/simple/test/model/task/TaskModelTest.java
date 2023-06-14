@@ -25,32 +25,10 @@ public class TaskModelTest {
         LocalDate creationDate = LocalDate.now();                   //дата создания
         LocalDate changeDate = LocalDate.now();                     //дата изменения
 
-        Long emplId = 1L;
-        final String firstName = "FirstName";
-        final String lastName = "LastName";
-        EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
-        EmployeeModel employeeModel = new EmployeeModel();
-        employeeModel.setId(emplId);
-        employeeModel.setFirstName(firstName);
-        employeeModel.setLastName(lastName);
-        employeeModel.setStatus(employeeStatus);
+        EmployeeModel employeeModel = createEmployee(1L);
+        EmployeeModel authorModel = createEmployee(2L);
+        ProjectModel projectModel = createProject();
 
-        Long aId = 2L;
-        final String afirstName = "FirstName";
-        final String alastName = "LastName";
-        EmployeeModel authorModel = new EmployeeModel();
-        employeeModel.setId(aId);
-        employeeModel.setFirstName(afirstName);
-        employeeModel.setLastName(alastName);
-        employeeModel.setStatus(employeeStatus);
-
-        ProjectModel projectModel = new ProjectModel();
-        String code = "001";
-        String name = "Project001";
-        ProjectStatus projectStatus = ProjectStatus.DRAFT;
-        projectModel.setCode(code);
-        projectModel.setName(name);
-        projectModel.setStatus(projectStatus);
 
         TaskModel model = new TaskModel();
         model.setId(id);
@@ -76,5 +54,56 @@ public class TaskModelTest {
         Assertions.assertEquals(projectModel, model.getProject());
         Assertions.assertEquals(employeeModel, model.getEmployee());
         Assertions.assertEquals(authorModel, model.getAuthor());
+    }
+
+    private EmployeeModel createEmployee(Long id) {
+        Long emplId = id;
+        final String firstName = "FirstName";
+        final String lastName = "LastName";
+        EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
+        EmployeeModel employeeModel = new EmployeeModel();
+        employeeModel.setId(emplId);
+        employeeModel.setFirstName(firstName);
+        employeeModel.setLastName(lastName);
+        employeeModel.setStatus(employeeStatus);
+        return employeeModel;
+    }
+
+    private ProjectModel createProject() {
+        ProjectModel projectModel = new ProjectModel();
+        String code = "001";
+        String name = "Project001";
+        ProjectStatus projectStatus = ProjectStatus.DRAFT;
+        projectModel.setCode(code);
+        projectModel.setName(name);
+        projectModel.setStatus(projectStatus);
+        return projectModel;
+    }
+    private TaskModel createTaskModel(Long id) {                    //id задачи
+        String taskName = "task01";                                 //наименование задачи
+        String taskDescription = "some_description";                //описание задачи
+        int labourcost = 8;                                         //трудозатраты
+        LocalDate executionDate = LocalDate.now().plusDays(2);      //дата исполнения
+        TaskStatus taskStatus = TaskStatus.NEW;                     //статус
+        LocalDate creationDate = LocalDate.now();                   //дата создания
+        LocalDate changeDate = LocalDate.now();                     //дата изменения
+
+        EmployeeModel employeeModel = createEmployee(1L);
+        EmployeeModel authorModel = createEmployee(2L);
+        ProjectModel projectModel = createProject();
+
+        TaskModel model = new TaskModel();
+        model.setId(id);
+        model.setProject(projectModel);
+        model.setName(taskName);
+        model.setDetails(taskDescription);
+        model.setEmployee(employeeModel);
+        model.setLaborCost(labourcost);
+        model.setExecutiondate(executionDate);
+        model.setStatus(taskStatus);
+        model.setAuthor(authorModel);
+        model.setCreationdate(creationDate);
+        model.setChangedate(changeDate);
+        return model;
     }
 }

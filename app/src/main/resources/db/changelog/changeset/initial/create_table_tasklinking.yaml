@@ -1,0 +1,22 @@
+databaseChangeLog:
+- changeSet:
+    id: 1684999823507
+    author: Admin
+    changes:    
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tasklink_pkey
+            name: masterid
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tasklink_pkey
+            name: slaveid
+            type: BIGINT
+        tableName: tasklink

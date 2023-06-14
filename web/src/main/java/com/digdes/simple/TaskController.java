@@ -54,4 +54,18 @@ public class TaskController {
     public List<TaskDTO> getFiltered(@RequestBody TaskSrchDTO dto) {
         return taskService.getFiltered(dto);
     }
+
+    @Operation(summary = "Прикрепить связанную задачу. Задача с id = slaveId прикрепляется к задаче с id = masterId")
+    @PostMapping(value = "/link",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public TaskDTO addLink(@RequestParam(value="masterId") Long masterId, @RequestParam(value="slaveId") Long slaveId)
+    {
+        return taskService.addLink(masterId, slaveId);
+    }
+
+    @Operation(summary = "Получить связанные задачи")
+    @GetMapping(value = "/links/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TaskDTO> getAllLinks(@PathVariable Long id) {
+        return taskService.getLinks(id);
+    }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -245,6 +246,43 @@ public class TaskServiceImpl implements TaskService {
         if (dtos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+        return dtos;
+    }
+
+    @Override
+    public TaskDTO addLink(Long masterTask, Long slaveTask) {
+        if (masterTask == null || slaveTask == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        TaskModel master = taskDAO.getById(masterTask);
+        TaskModel slave = taskDAO.getById(slaveTask);
+
+        if (master == null || slave == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        Set<TaskModel> set = master.getLinks();
+        set.add(slave);
+        master.setLinks(set);
+        master = taskDAO.update(master);
+        return TaskMapper.map(master);
+    }
+
+    @Override
+    public List<TaskDTO> getLinks(Long id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        };
+        TaskModel model = taskDAO.getById(id);
+        if (model == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        List<TaskDTO> dtos = model.getLinks()
+                .stream()
+                .map(m-> TaskMapper.map(m))
+                .toList();
         return dtos;
     }
 }

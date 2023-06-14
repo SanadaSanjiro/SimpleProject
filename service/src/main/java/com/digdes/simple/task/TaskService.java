@@ -15,4 +15,8 @@ public interface TaskService {
     TaskDTO changeStatus(Long id);
 
     List<TaskDTO> getByPrjCode(String code);
+
+    TaskDTO addLink(Long masterTask, Long slaveTask);
+
+    List<TaskDTO> getLinks(Long id);
 }

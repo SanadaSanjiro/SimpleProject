@@ -32,4 +32,31 @@ databaseChangeLog:
     -  addNotNullConstraint:
         columnName: status
         tableName: employees
-        
+-  changeSet:  
+    id:  1685330309497-15
+    author:  Admin
+    runOnChange: true
+    changes:
+    -  addForeignKeyConstraint:
+        baseColumnNames:  masterid
+        baseTableName:  tasklink
+        constraintName:  fk_task1
+        onDelete:  CASCADE 
+        onUpdate:  RESTRICT
+        referencedColumnNames:  id
+        referencedTableName:  tasks
+        validate:  true
+-  changeSet:  
+    id:  1685330309497-16
+    author:  Admin
+    runOnChange: true
+    changes:
+    -  addForeignKeyConstraint:
+        baseColumnNames:  slaveid
+        baseTableName:  tasklink
+        constraintName:  fk_task2
+        onDelete:  CASCADE 
+        onUpdate:  RESTRICT
+        referencedColumnNames:  id
+        referencedTableName:  tasks
+        validate:  true

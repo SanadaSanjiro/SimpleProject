@@ -9,6 +9,9 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -40,6 +43,12 @@ public class TaskModel implements Serializable {
     private LocalDate creationdate;
     @Column(name="change_date")
     private LocalDate changedate;
+    @ManyToMany(cascade = CascadeType.ALL)
+    //Список связанных задач
+    @JoinTable(name="tasklink",
+            joinColumns = {@JoinColumn(name="masterid")},
+            inverseJoinColumns = {@JoinColumn(name="slaveid")})
+    private Set<TaskModel> links = new HashSet<>();
 
     @Override
     public String toString() {

@@ -64,7 +64,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Create Task when all conditions ok")
     public void createTask_AllGoodConditions() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -120,7 +120,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no Task name throws exception")
     public void createTask_NoTaskName_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         TaskCrtDTO dto = new TaskCrtDTO();
         dto.setEmployee(model.getEmployee().getId());
@@ -134,7 +134,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no Project code throws exception")
     public void createTask_NoProjectCode_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         TaskCrtDTO dto = new TaskCrtDTO();
         dto.setCode(model.getProject().getCode());
@@ -148,7 +148,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no Labour Cost throws exception")
     public void createTask_NoLaborCost_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         TaskCrtDTO dto = new TaskCrtDTO();
         dto.setCode(model.getProject().getCode());
@@ -162,7 +162,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no Execution Date throws exception")
     public void createTask_NoExecutionDate_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         TaskCrtDTO dto = new TaskCrtDTO();
         dto.setCode(model.getProject().getCode());
@@ -176,7 +176,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no such Project throws exception")
     public void createTask_NoSuchProject_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         EmployeeModel employeeModel = model.getEmployee();
 
         TaskCrtDTO dto = new TaskCrtDTO();
@@ -207,7 +207,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task no such Employee throws exception")
     public void createTask_NoSuchEmployee_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -239,7 +239,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("Create Task but Execution Date too short throws exception")
     public void createTask_BadExecutionDate_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -275,7 +275,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetById Task when all conditions ok")
     public void getByIdTask_AllGoodConditions() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         Long id = model.getId();
 
@@ -304,7 +304,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetById Task no result throws Exception")
     public void getByIdTask_NoResult_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         Long id = model.getId();
 
@@ -319,7 +319,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task when all conditions ok")
     public void updateTask_AllGoodConditions() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -378,7 +378,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task empty name throws Exception")
     public void updateTask_EmptyName_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         //Создаем ДТО для изменения данных Задачи, не заполняем Наименование задачи
         LocalDate newExecutionDate = model.getExecutiondate().plusDays(2);
@@ -397,7 +397,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task empty project code throws Exception")
     public void updateTask_EmptyCode_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         //Создаем ДТО для изменения данных Задачи, не заполняем код проекта
         LocalDate newExecutionDate = model.getExecutiondate().plusDays(2);
@@ -416,7 +416,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task empty id throws Exception")
     public void updateTask_EmptyId_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         //Создаем ДТО для изменения данных Задачи, не заполняем id задачи
         LocalDate newExecutionDate = model.getExecutiondate().plusDays(2);
@@ -435,7 +435,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task empty labor cost throws Exception")
     public void updateTask_EmptyLaborCost_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         //Создаем ДТО для изменения данных Задачи, не заполняем трудозатраты
         LocalDate newExecutionDate = model.getExecutiondate().plusDays(2);
@@ -454,7 +454,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task empty execution date throws Exception")
     public void updateTask_EmptyExecutionDate_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
 
         //Создаем ДТО для изменения данных Задачи, не заполняем дату исполнения
         LocalDate newExecutionDate = model.getExecutiondate().plusDays(2);
@@ -473,7 +473,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task no such task throws exception")
     public void updateTask_NoTask_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -516,7 +516,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task no such project throws exception")
     public void updateTask_NoProject_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -559,7 +559,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task no such employee throws exception")
     public void updateTask_NoEmployee_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -602,7 +602,7 @@ public class TaskServiceImplTest extends BaseTest {
     @DisplayName("Update Task execution date too short throws exception")
     public void updateTask_ExecutionDateTooShort_ThrowException() {
         //Создаем модели для возврата моками
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         ProjectModel projectModel = model.getProject();
         EmployeeModel employeeModel = model.getEmployee();
 
@@ -647,7 +647,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetFiltered Task when all conditions ok")
     public void getFilteredTask_AllGoodConditions() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         TaskSrchDTO dto = new TaskSrchDTO();
         dto.setName(model.getName());
@@ -668,7 +668,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetFiltered Task no results")
     public void getFilteredTask_NoResults() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         TaskSrchDTO dto = new TaskSrchDTO();
         dto.setName(model.getName());
@@ -682,7 +682,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("ChangeStatus Task when all conditions ok")
     public void changeStatusTask_AllGoodConditions() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         Long id = model.getId();
 
@@ -708,7 +708,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("ChangeStatus Task no such Task Throws Exception")
     public void changeStatusTask_NoSuchTask_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         Long id = model.getId();
 
@@ -723,7 +723,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetByPrjCode Task when all conditions ok")
     public void getByPrjCodeTask_AllGoodConditions() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         ProjectModel projectModel = model.getProject();
         String code = projectModel.getCode();
@@ -745,7 +745,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetByPrjCode Task no such Project Throws Exception")
     public void getByPrjCodeTask_NoSuchProject_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         ProjectModel projectModel = model.getProject();
         String code = projectModel.getCode();
@@ -761,7 +761,7 @@ public class TaskServiceImplTest extends BaseTest {
     @Test
     @DisplayName("GetByPrjCode Task nothing found Throws Exception")
     public void getByPrjCodeTask_NoResult_ThrowException() {
-        TaskModel model = createTaskModel();
+        TaskModel model = createTaskModel(100L);
         model = setAttributes(model);
         ProjectModel projectModel = model.getProject();
         String code = projectModel.getCode();
@@ -773,13 +773,11 @@ public class TaskServiceImplTest extends BaseTest {
         Assertions.assertThrows(ResponseStatusException.class, ()->taskService.getByPrjCode(code));
     }
 
-
     /****************************************************************************
      * Initialisation
      */
 
-    private TaskModel createTaskModel() {
-        Long id = 100L;
+    private TaskModel createTaskModel(Long id) {
         final String firstName = "FirstName";
         final String lastName = "LastName";
         EmployeeStatus employeeStatus = EmployeeStatus.ACTIVE;
