@@ -1,0 +1,22 @@
+databaseChangeLog:
+- changeSet:
+    id: 1684999823507
+    author: Admin
+    changes:    
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: filestorage_pkey
+            name: prjcode
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: filestorage_pkey
+            name: name
+            type: VARCHAR(255)
+        tableName: files
