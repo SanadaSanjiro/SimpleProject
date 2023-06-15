@@ -33,36 +33,27 @@ public class PrjFileServiceImpl implements PrjFileService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         ProjectModel projectModel = projectDAO.getByCode(code);
-        System.out.println("Модель проекта: " + projectModel);
         String name = resource.getOriginalFilename();
-        System.out.println("имя файла: " + name);
 
         PrjFileKey key = new PrjFileKey();
         key.setName(name);
         key.setPrjcode(projectModel.getCode());
-        System.out.println("Ключ: " + key);
 
         PrjFileModel prjFileModel = new PrjFileModel();
         prjFileModel.setProject(projectModel);
         prjFileModel.setKey(key);
-        System.out.println("Модель файла: " + prjFileModel);
 
         prjFileModel = prjFileDAO.create(prjFileModel);
 
         Set<PrjFileModel> set = projectModel.getFiles();
         set.add(prjFileModel);
-        System.out.println("Сет файлов: " + set);
         projectModel.setFiles(set);
-        System.out.println("Сет файлов в проекте: " + projectModel.getFiles());
 
         FileManager fileManager = new FileManager();
         String path = "\\projects\\" + projectModel.getCode() + "\\";
-        System.out.println("Path: " + path);
         fileManager.upload(resource.getBytes(), name, path);
-        System.out.println("Файл сохранен!");
 
         projectModel = projectDAO.update(projectModel);
-        System.out.println("Модель проекта обновлена: " + projectModel);
         return PrjFileMapper.map(prjFileModel);
     }
 

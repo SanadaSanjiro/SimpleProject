@@ -8,6 +8,17 @@
     <artifactId>simpleproject</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+
+    <!-- Inherit defaults from Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.5</version>
+    </parent>
+
+
+
     <modules>
         <module>mapping</module>
         <module>dao</module>
@@ -20,9 +31,11 @@
         <module>mail</module>
     </modules>
 
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <mainClass>com.digdes.simple.Application</mainClass>
     </properties>
 
     <dependencies>
@@ -212,7 +225,15 @@
                 <version>3.0.5</version>
                 <configuration>
                     <imageName>simple-project:${project.version}}</imageName>
+                    <mainClass>com.digdes.simple.Application</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!--Отчетность по тестам -->

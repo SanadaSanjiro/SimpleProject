@@ -11,3 +11,14 @@
 /app/src/main/resources/storage/tasks/1/
 /app/src/main/resources/storage/tasks/2/
 /app/src/main/resources/storage/tasks/5/
+/out/
+/app/target/
+/web/target/
+/service/target/
+/model/target/
+/mapping/target/
+/mail/target/
+/dto/target/
+/dao/target/
+/amqp/target/
+/mail/src/main/java/META-INF/MANIFEST.MF

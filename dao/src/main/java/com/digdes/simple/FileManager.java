@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileManager {
-    private final String DIRECTORY_PATH = ".\\app\\src\\main\\resources\\storage";
+    private final String DIRECTORY_PATH = ".\\storage";
     public void upload(byte[] resource, String name, String path) throws IOException {
         Path directory = Paths.get(DIRECTORY_PATH, path);
 

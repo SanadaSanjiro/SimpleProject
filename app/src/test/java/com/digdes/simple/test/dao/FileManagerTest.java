@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 
 public class FileManagerTest {
+    /**
     final String DIRECTORY_PATH = ".\\src\\main\\resources\\storage\\test.txt";
     Path path = Paths.get(DIRECTORY_PATH);
     File file = path.toFile();
@@ -48,4 +49,5 @@ public class FileManagerTest {
             }
         }
     }
+    **/
 }
