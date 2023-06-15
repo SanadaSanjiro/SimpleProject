@@ -13,10 +13,8 @@ public class FileManager {
     private final String DIRECTORY_PATH = ".\\app\\src\\main\\resources\\storage";
     public void upload(byte[] resource, String name, String path) throws IOException {
         Path directory = Paths.get(DIRECTORY_PATH, path);
-        System.out.println(path);
 
         if (!Files.exists(directory)) {
-            System.out.println("Создаем директорию");
                 createPath(directory.toAbsolutePath());
             }
         directory = Paths.get(DIRECTORY_PATH, path, name);
