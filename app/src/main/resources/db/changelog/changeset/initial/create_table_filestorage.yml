@@ -20,3 +20,24 @@ databaseChangeLog:
             name: name
             type: VARCHAR(255)
         tableName: files
+- changeSet:
+    id: 1684999823507-01
+    author: Admin
+    changes:    
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tskfilestorage_pkey
+            name: taskid
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tskfilestorage_pkey
+            name: name
+            type: VARCHAR(255)
+        tableName: taskfiles

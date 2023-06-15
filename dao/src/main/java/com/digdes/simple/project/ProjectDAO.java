@@ -42,7 +42,7 @@ public class ProjectDAO {
         try {
             return projectRepository.save(projectModel);
         } catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }

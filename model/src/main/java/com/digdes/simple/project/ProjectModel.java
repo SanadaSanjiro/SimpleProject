@@ -1,7 +1,6 @@
 package com.digdes.simple.project;
 
-import com.digdes.simple.file.FileModel;
-import com.digdes.simple.task.TaskModel;
+import com.digdes.simple.file.PrjFileModel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,7 +28,7 @@ public class ProjectModel implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "prjcode")
-    private Set<FileModel> files = new HashSet<>();
+    private Set<PrjFileModel> files = new HashSet<>();
 
     @Override
     public String toString() {

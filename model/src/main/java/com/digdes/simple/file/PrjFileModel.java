@@ -9,9 +9,9 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name="files")
-public class FileModel {
+public class PrjFileModel {
     @EmbeddedId
-    private FileKey key;
+    private PrjFileKey key;
     @ManyToOne
     @MapsId("prjcode")
     @JoinColumn(name = "prjcode")

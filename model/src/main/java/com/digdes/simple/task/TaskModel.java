@@ -1,6 +1,8 @@
 package com.digdes.simple.task;
 
 import com.digdes.simple.employee.EmployeeModel;
+import com.digdes.simple.file.PrjFileModel;
+import com.digdes.simple.file.TskFileModel;
 import com.digdes.simple.project.ProjectModel;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -50,6 +52,10 @@ public class TaskModel implements Serializable {
             joinColumns = {@JoinColumn(name="masterid")},
             inverseJoinColumns = {@JoinColumn(name="slaveid")})
     private Set<TaskModel> links = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn(name = "taskid")
+    private Set<TskFileModel> files = new HashSet<>();
 
     @Override
     public String toString() {

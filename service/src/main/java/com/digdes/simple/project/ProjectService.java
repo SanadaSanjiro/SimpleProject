@@ -17,6 +17,4 @@ public interface ProjectService {
     List<ProjectDTO> getFiltered(ProjectSrchDTO dto);
 
     List<ProjectDTO> getAll();
-
-    ProjectDTO addFile(String code, MultipartFile resource) throws IOException;
 }

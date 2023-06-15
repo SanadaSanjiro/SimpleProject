@@ -32,7 +32,7 @@ public class FileManagerTest {
         byte[] resource = string.getBytes(StandardCharsets.UTF_8);
         FileManager fm = new FileManager();
         try {
-            fm.upload(resource, "test.txt");
+            fm.upload(resource, "test.txt", file.getPath());
         } catch (IOException e) {
             e.printStackTrace();
         }

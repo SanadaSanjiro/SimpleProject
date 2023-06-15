@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Embeddable
-public class FileKey implements Serializable {
+public class PrjFileKey implements Serializable {
     @Column(name="prjcode")
     private String prjcode;
     @Column(name="name")
@@ -25,8 +25,16 @@ public class FileKey implements Serializable {
     public boolean equals(Object obj) {
         if (obj == this) { return true; }
         if (obj==null || obj.getClass()!=this.getClass()) {return false;}
-        FileKey key = (FileKey) obj;
+        PrjFileKey key = (PrjFileKey) obj;
         if (!(key.getName()).equals(name)) {return false;}
         return key.getPrjcode().equals(prjcode);
+    }
+
+    @Override
+    public String toString() {
+        return "FileKey{" +
+                "prjcode='" + prjcode + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
