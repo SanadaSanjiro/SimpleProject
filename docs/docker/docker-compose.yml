@@ -89,13 +89,7 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
-
-  simple:
-    container_name: simple_container
-    image: simple-project
-    hostname: java
-    network_mode: 'host'
-      
+     
 networks:
   postgres:
     driver: bridge
