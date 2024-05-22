@@ -1,4 +1,4 @@
-Планируемые модули проекта:
+Модули проекта:
 1) web обеспечивает взаимодействие с клиентом
 2) service слой бизнес-логики
 3) dao DAO, работа с БД
@@ -10,6 +10,9 @@
 Также, в app/src/main/resources/db.changelog/changeset хранятся данные liquibase
 8) amqp предоставляет доступ к RabbitMQ
 9) mail обеспечивает отправку сообщений на e-mail
+
+Документация OpenAPI по ссылке:
+http://localhost:8080/swagger-ui/index.html
 
 схема архитектуры:
 ![](prjct_schm.png)
